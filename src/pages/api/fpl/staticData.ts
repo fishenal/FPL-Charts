@@ -1,4 +1,4 @@
-import { staticData } from "@/pages/data/staticData";
+import { staticData } from "@/lib/staticData";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 interface ResponseData {
