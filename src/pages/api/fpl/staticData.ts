@@ -24,4 +24,5 @@ export default async function handler(
       data: staticData,
     });
   }
+  res.end();
 }

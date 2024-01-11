@@ -86,5 +86,5 @@ export default async function handler(
     res.status(404);
   }
 
-  res.status(200).json({ message: "Hello from Next.js!" });
+  res.end();
 }
