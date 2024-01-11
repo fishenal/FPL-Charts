@@ -23,13 +23,13 @@ interface PointsItem {
   event_transfers_cost: number;
   points_on_bench: number;
 }
+export interface UserData {
+  basicInfo: BasicInfoRes;
+  historyInfo: PointsItem[];
+}
 interface ResponseData {
   message?: string;
-  data?: {
-    basicInfo: BasicInfoRes;
-    historyInfo: PointsItem[];
-    // staticData: any;
-  };
+  data?: UserData;
 }
 //fantasy.premierleague.com/api/entry/5524951/
 const host = "https://fantasy.premierleague.com";

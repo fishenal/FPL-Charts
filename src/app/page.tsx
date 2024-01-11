@@ -2,18 +2,23 @@
 import { ChangeEvent, useState } from "react";
 import styles from "./page.module.css";
 import axios from "axios";
+import { useFPLData } from "./hooks/useFPLData";
 
 export default function Home() {
   const [id, setId] = useState("");
-
+  const [onQuery, setOnQuery] = useState(false);
+  const data = useFPLData(onQuery, id);
+  console.log("🚀 ~ Home ~ data:", data);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
+    setOnQuery(false);
   };
 
   const handleSearch = () => {
     if (/^\d{7}$/.test(id)) {
-      getUserData(id);
-      getStaticData();
+      setOnQuery(true);
+      // getUserData(id);
+      // getStaticData();
     } else {
       alert("Please input validate ID, 7 digit");
     }

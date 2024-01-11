@@ -1,9 +1,12 @@
 import { staticData } from "@/lib/staticData";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+export interface StaticData {
+  [k: string]: any;
+}
 interface ResponseData {
   message?: string;
-  data?: Record<string, any>;
+  data?: StaticData;
 }
 //fantasy.premierleague.com/api/entry/5524951/
 const host = "https://fantasy.premierleague.com";
