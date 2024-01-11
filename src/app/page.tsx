@@ -13,16 +13,22 @@ export default function Home() {
   const handleSearch = () => {
     if (/^\d{7}$/.test(id)) {
       getUserData(id);
+      getStaticData();
     } else {
       alert("Please input validate ID, 7 digit");
     }
   };
 
   const getUserData = async (id: string) => {
-    const res = await axios.get(
-      "https://fantasy.premierleague.com/api/entry/5524951/"
-    );
-    console.log("🚀 ~ file: page.tsx:22 ~ getUserData ~ res:", res);
+    if (id) {
+      const res = await axios.get(`/api/fpl/${id}`);
+      console.log("🚀 ~ file: page.tsx:22 ~ getUserData ~ res:", res);
+    }
+  };
+
+  const getStaticData = async () => {
+    const res = await axios.get("/api/fpl/staticData");
+    console.log("🚀 ~ getStaticData ~ res:", res);
   };
 
   return (
