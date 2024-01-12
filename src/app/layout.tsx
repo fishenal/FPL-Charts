@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Header } from "./components/header";
+import { Nav } from "./components/nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,41 +26,12 @@ export default function RootLayout({
                 FPL Charts
               </h1>
             </header>
-            <ul className="p-2 text-slate-200">
-              <li className="pt-4 text-xl">User Performance</li>
-              <li className="pl-4">
-                <a href="#" className="hover:text-yellow-100">
-                  Points
-                </a>
-              </li>
-              <li className="pl-4">
-                <a href="#" className="hover:text-yellow-100">
-                  Rank
-                </a>
-              </li>
-              <li className="pl-4">
-                <a href="#" className="hover:text-yellow-100">
-                  Team Value
-                </a>
-              </li>
-              <li className="pl-4">
-                <a href="#" className="hover:text-yellow-100">
-                  Transfer
-                </a>
-              </li>
-              <li className="pt-4">
-                <a href="#" className="text-xl hover:text-yellow-100">
-                  Player Performance
-                </a>
-              </li>
-              <li className="pt-4">
-                <a href="#" className="text-xl hover:text-yellow-100">
-                  Team Performance
-                </a>
-              </li>
-            </ul>
+            <Nav />
           </nav>
-          <div className="basis-4/5 p-4">{children}</div>
+          <div className="basis-4/5 p-4">
+            <Header />
+            <div className="flex">{children}</div>
+          </div>
         </main>
       </body>
     </html>
