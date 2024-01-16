@@ -43,7 +43,7 @@ export const useFPLData = (onQuery: boolean, id: string): IFPLData | {} => {
     if (onQuery || id === "") {
       const ls = window.localStorage.getItem(`${lsKey}`);
       if (ls) {
-        toast.success(`Get Data From Local Storage Success`);
+        // toast.success(`Get Data From Local Storage Success`);
         setFplData({ ...JSON.parse(ls), local: true });
       } else {
         getData(id);

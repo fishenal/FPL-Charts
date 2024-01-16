@@ -12,6 +12,8 @@
     "@nextui-org/react": "^2.2.9",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.5",
+    "echarts": "^5.4.3",
+    "echarts-for-react": "^3.0.2",
     "framer-motion": "^10.16.16",
     "next": "14.0.4",
     "postcss": "^8.4.32",
