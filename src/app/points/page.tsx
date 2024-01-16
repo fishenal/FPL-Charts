@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from "react";
 import styles from "./page.module.css";
 import axios from "axios";
 
-export default function Home() {
+export default function Points() {
   const [id, setId] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +32,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex justify-center flex-col items-center gap-2">
+    <div className="flex justify-center flex-col items-center gap-2 py-5">
       <p className="text-xl font-bold">Please input your game id:</p>
       <input
         className="border-solid border border-slate-300 rounded w-40 h-10 px-2"

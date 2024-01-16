@@ -1,6 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-
-interface BasicInfoRes {
+export interface BasicInfoRes {
   name: string;
   player_first_name: string;
   player_last_name: string;
@@ -10,7 +8,7 @@ interface BasicInfoRes {
   id: number;
 }
 
-interface PointsItem {
+export interface PointsItem {
   event: number;
   points: number;
   total_points: number;
@@ -27,13 +25,10 @@ export interface UserData {
   basicInfo: BasicInfoRes;
   historyInfo: PointsItem[];
 }
-interface ResponseData {
-  message?: string;
-  data?: UserData;
-}
+
 //fantasy.premierleague.com/api/entry/5524951/
 const host = "https://fantasy.premierleague.com";
-const fetchBasicInfo = async (gid: string): Promise<BasicInfoRes> => {
+export const fetchBasicInfo = async (gid: string): Promise<BasicInfoRes> => {
   const res = await fetch(`${host}/api/entry/${gid}`);
   const repo = await res.json();
   return {
@@ -47,44 +42,16 @@ const fetchBasicInfo = async (gid: string): Promise<BasicInfoRes> => {
   };
 };
 
-const fetchPointsHistory = async (gid: string): Promise<PointsItem[]> => {
+export const fetchPointsHistory = async (
+  gid: string
+): Promise<PointsItem[]> => {
   const res = await fetch(`${host}/api/entry/${gid}/history`);
   const repo = await res.json();
   return repo.current;
 };
 
-const fetchStaticData = async () => {
+export const fetchStaticData = async () => {
   const res = await fetch(`${host}/api/bootstrap-static`);
   const repo = await res.json();
   return repo;
 };
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
-) {
-  if (req.method === "GET") {
-    const { gid } = req.query;
-    if (gid) {
-      try {
-        const basicInfo = await fetchBasicInfo(gid as string);
-        const historyInfo = await fetchPointsHistory(gid as string);
-        // const staticData = await fetchStaticData();
-        res.status(200).json({
-          message: "",
-          data: {
-            basicInfo,
-            historyInfo,
-            // staticData,
-          },
-        });
-      } catch (err) {
-        res.status(500).json({ message: err as string });
-      }
-    }
-  } else {
-    res.status(404);
-  }
-
-  res.end();
-}

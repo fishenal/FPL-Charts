@@ -20,7 +20,7 @@ interface PlayerItem {
   team: string;
   element_types: string;
 }
-interface Elements {
+export interface Elements {
   [key: string]: PlayerItem;
 }
 export default async function handler(
@@ -28,7 +28,6 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   if (req.method === "GET") {
-    console.log(staticData);
     const elements: Elements = {};
     const teams: Record<string, string> = {};
     const elementType: Record<string, string> = {};
