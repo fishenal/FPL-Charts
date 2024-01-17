@@ -9,20 +9,12 @@ export default function Points() {
   const catArr = useMemo(
     () => [
       {
-        label: "Total Points",
-        mapKey: "total_points",
+        label: "OR Rank",
+        mapKey: "overall_rank",
       },
       {
-        label: "GW Points",
-        mapKey: "points",
-      },
-      {
-        label: "Bench Points",
-        mapKey: "points_on_bench",
-      },
-      {
-        label: "Trans. Cost",
-        mapKey: "event_transfers_cost",
+        label: "GW Rank",
+        mapKey: "rank",
       },
     ],
     []
@@ -43,7 +35,6 @@ export default function Points() {
           data: historyInfo.map((it) => it[mapKey as keyof PointsItem]),
         });
       });
-      // console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
       return seriesData;
     }
     return null;
@@ -62,7 +53,7 @@ export default function Points() {
   }, [data]);
   const option = {
     title: {
-      text: "Points Chart",
+      text: "Rank Chart",
     },
     tooltip: {
       trigger: "axis",
@@ -95,6 +86,7 @@ export default function Points() {
     yAxis: [
       {
         type: "value",
+        inverse: true,
       },
     ],
     series: setSeries,
