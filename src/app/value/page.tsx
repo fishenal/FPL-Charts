@@ -9,20 +9,16 @@ export default function Points() {
   const catArr = useMemo(
     () => [
       {
-        label: "Total Points",
-        mapKey: "total_points",
+        label: "Bank Money",
+        mapKey: "bank",
       },
       {
-        label: "GW Points",
-        mapKey: "points",
+        label: "Tans. Made",
+        mapKey: "event_transfers",
       },
       {
-        label: "Bench Points",
-        mapKey: "points_on_bench",
-      },
-      {
-        label: "Trans. Cost",
-        mapKey: "event_transfers_cost",
+        label: "Team Value",
+        mapKey: "value",
       },
     ],
     []
@@ -34,18 +30,25 @@ export default function Points() {
       const seriesData: Record<string, any>[] = [];
 
       catArr.forEach(({ mapKey, label }) => {
+        const type = mapKey === "value" ? "line" : "bar";
         seriesData.push({
           name: label,
-          type: "line",
+          type,
           emphasis: {
             focus: "series",
           },
-          data: historyInfo.map((it) => it[mapKey as keyof PointsItem]),
+          data: historyInfo.map((it) => {
+            if (mapKey === "value") {
+              return it[mapKey as keyof PointsItem] / 10;
+            }
+            return it[mapKey as keyof PointsItem];
+          }),
         });
       });
-      // console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
+      console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
       return seriesData;
     }
+
     return null;
   }, [data, catArr]);
 
@@ -60,10 +63,9 @@ export default function Points() {
     }
     return [];
   }, [data]);
-
   const option = {
     title: {
-      text: "Points Chart",
+      text: "Rank Chart",
     },
     tooltip: {
       trigger: "axis",

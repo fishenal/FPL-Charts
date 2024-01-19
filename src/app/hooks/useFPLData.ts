@@ -16,6 +16,7 @@ const lsKey = "fpl-charts-data";
 
 export const useFPLData = (onQuery: boolean, id: string): IFPLData | {} => {
   const [fplData, setFplData] = useState<IFPLData | {}>({});
+  // console.log("🚀 ~ useFPLData ~ fplData:", fplData);
   // const [userData, setUserData] = useState<UserData | {}>({});
   // const [elementData, setElementData] = useState<Elements | {}>({});
   useEffect(() => {
