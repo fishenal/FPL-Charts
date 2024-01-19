@@ -16,11 +16,11 @@ export const Header = () => {
   };
 
   const handleSearch = () => {
-    if (/^\d{7}$/.test(id)) {
-      setOnQuery(true);
-    } else {
-      toast.error("Please input validate ID, 7 digit");
-    }
+    // if (/^\d{7}$/.test(id)) {
+    setOnQuery(true);
+    // } else {
+    //   toast.error("Please input validate ID, 7 digit");
+    // }
   };
 
   const renderDataInfo = () => {
