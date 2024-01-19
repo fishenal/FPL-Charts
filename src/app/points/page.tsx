@@ -60,6 +60,7 @@ export default function Points() {
     }
     return [];
   }, [data]);
+
   const option = {
     title: {
       text: "Points Chart",

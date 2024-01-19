@@ -1,39 +1,34 @@
+"use client";
 import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const Nav = () => {
+  const pathname = usePathname();
+  const navs = [
+    {
+      label: "Points",
+      path: "/points",
+    },
+    {
+      label: "Rank",
+      path: "/rank",
+    },
+  ];
   return (
-    <ul className="p-2 text-slate-200">
-      <li className="pt-4 text-xl">User Performance</li>
-      <li className="pl-4">
-        <a href="#" className="hover:text-yellow-100">
-          Points
-        </a>
-      </li>
-      <li className="pl-4">
-        <a href="#" className="hover:text-yellow-100">
-          Rank
-        </a>
-      </li>
-      <li className="pl-4">
-        <a href="#" className="hover:text-yellow-100">
-          Team Value
-        </a>
-      </li>
-      <li className="pl-4">
-        <a href="#" className="hover:text-yellow-100">
-          Transfer
-        </a>
-      </li>
-      <li className="pt-4">
-        <a href="#" className="text-xl hover:text-yellow-100">
-          Player Performance
-        </a>
-      </li>
-      <li className="pt-4">
-        <a href="#" className="text-xl hover:text-yellow-100">
-          Team Performance
-        </a>
-      </li>
+    <ul className="text-sky-800 w-full mt-5">
+      {navs.map(({ label, path }, idx) => (
+        <li className="mx-2" key={idx}>
+          <Link
+            href={path}
+            className={`py-1 px-2 mt-2 hover:bg-amber-200 w-full block rounded-md ${
+              pathname === path ? "bg-amber-200" : ""
+            }`}
+          >
+            {label}
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 };

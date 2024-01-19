@@ -21,16 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="container flex flex-row h-screen">
-          <nav className="basis-1/5 bg-slate-700">
+        <main className="flex flex-row h-screen w-screen text-sky-800">
+          <nav className="w-1/5 bg-neutral-100 shadow-inner">
             <header className="p-2 pt-4">
-              <h1 className="text-slate-200 text-2xl border-solid border-2 p-2 border-yellow-100">
-                FPL Charts
-              </h1>
+              <h1 className=" text-2xl p-2">FPL Charts</h1>
             </header>
             <Nav />
           </nav>
-          <div className="basis-4/5 p-4">
+          <div className="w-4/5 p-4">
             <Header />
             <div className="flex">{children}</div>
             <ToastContainer
