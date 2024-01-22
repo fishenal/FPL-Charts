@@ -1,5 +1,6 @@
 export interface BasicInfoRes {
   name: string;
+  current_event: number;
   player_first_name: string;
   player_last_name: string;
   player_region_name: string;
@@ -39,6 +40,7 @@ export const fetchBasicInfo = async (gid: string): Promise<BasicInfoRes> => {
     summary_overall_points: repo.summary_overall_points,
     summary_overall_rank: repo.summary_overall_rank,
     id: repo.id,
+    current_event: repo.current_event,
   };
 };
 
@@ -48,6 +50,15 @@ export const fetchPointsHistory = async (
   const res = await fetch(`${host}/api/entry/${gid}/history`);
   const repo = await res.json();
   return repo.current;
+};
+
+export const fetchPicks = async (
+  gid: string,
+  gw: number
+): Promise<PointsItem[]> => {
+  const res = await fetch(`${host}/api/entry/${gid}/event/${gw}/picks`);
+  const repo = await res.json();
+  return repo;
 };
 
 export const fetchStaticData = async () => {

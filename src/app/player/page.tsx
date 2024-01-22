@@ -3,10 +3,15 @@ import { useMemo } from "react";
 import { IFPLData, useFPLData } from "../hooks/useFPLData";
 import ReactEcharts from "echarts-for-react";
 import { PointsItem } from "@/lib/fetch";
+import { useFPLPickData } from "../hooks/useFPLPickData";
 
-export default function Points() {
+export default function Player() {
   const data = useFPLData(true, "");
-  // console.log("🚀 ~ Points ~ data:", data);
+  const basicInfo = data?.basicInfo || {};
+  const pickData = useFPLPickData(
+    basicInfo?.current_event || 1,
+    basicInfo?.id || ""
+  );
   const catArr = useMemo(
     () => [
       {
@@ -29,38 +34,48 @@ export default function Points() {
     []
   );
   const catData = catArr.map((item) => item.label);
-  const setSeries = useMemo(() => {
-    if (Object.keys(data).length > 0) {
-      const { historyInfo } = data as IFPLData;
-      const seriesData: Record<string, any>[] = [];
+  const setSeries = useMemo(
+    () => {
+      // if (Object.keys(data).length > 0) {
+      //   const { historyInfo } = data as IFPLData;
+      //   const seriesData: Record<string, any>[] = [];
 
-      catArr.forEach(({ mapKey, label }) => {
-        seriesData.push({
-          name: label,
-          type: "line",
-          emphasis: {
-            focus: "series",
-          },
-          data: historyInfo.map((it) => it[mapKey as keyof PointsItem]),
-        });
-      });
-      // console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
-      return seriesData;
-    }
-    return null;
-  }, [data, catArr]);
+      //   catArr.forEach(({ mapKey, label }) => {
+      //     seriesData.push({
+      //       name: label,
+      //       type: "line",
+      //       emphasis: {
+      //         focus: "series",
+      //       },
+      //       data: historyInfo.map((it) => it[mapKey as keyof PointsItem]),
+      //     });
+      //   });
+      //   // console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
+      //   return seriesData;
+      // }
+      return null;
+    },
+    [
+      /*data, catArr*/
+    ]
+  );
 
-  const setXAxis = useMemo(() => {
-    if (Object.keys(data).length > 0) {
-      const { historyInfo } = data as IFPLData;
-      const xData = [];
-      for (let a = 1; a <= historyInfo.length; a++) {
-        xData.push(`GW${a}`);
-      }
-      return xData;
-    }
-    return [];
-  }, [data]);
+  const setXAxis = useMemo(
+    () => {
+      // if (Object.keys(data).length > 0) {
+      //   const { historyInfo } = data as IFPLData;
+      //   const xData = [];
+      //   for (let a = 1; a <= historyInfo.length; a++) {
+      //     xData.push(`GW${a}`);
+      //   }
+      //   return xData;
+      // }
+      return [];
+    },
+    [
+      /*data*/
+    ]
+  );
 
   const option = {
     title: {
