@@ -26,6 +26,7 @@ export const useFPLData = (onQuery: boolean, id: string): IFPLData | {} => {
   useEffect(() => {
     const getData = async (id: string) => {
       if (id) {
+        const tid = toast.loading("Please wait fetching your Data...");
         const res = await Promise.all([
           axios.get(`/api/fpl/user/${id}`),
           axios.get(`/api/fpl/history/${id}`),
@@ -48,9 +49,13 @@ export const useFPLData = (onQuery: boolean, id: string): IFPLData | {} => {
             userId: id,
           };
           setFplData(fplData);
-          toast.success(`Fetch ${id} Success`);
           window.localStorage.setItem(`${lsKey}`, JSON.stringify(fplData));
         }
+        toast.update(tid, {
+          render: `Fetch ${id} Success`,
+          type: "success",
+          isLoading: false,
+        });
       }
     };
     if (onQuery) {
