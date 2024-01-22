@@ -38,7 +38,7 @@ export default function Points() {
             focus: "series",
           },
           data: historyInfo.map((it) => {
-            if (mapKey === "value") {
+            if (mapKey === "value" || mapKey === "bank") {
               return it[mapKey as keyof PointsItem] / 10;
             }
             return it[mapKey as keyof PointsItem];
@@ -65,7 +65,7 @@ export default function Points() {
   }, [data]);
   const option = {
     title: {
-      text: "Rank Chart",
+      text: "Value Chart",
     },
     tooltip: {
       trigger: "axis",
