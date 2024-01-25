@@ -1,6 +1,4 @@
-import { fetchPicks } from "@/lib/fetch";
 import type { NextApiRequest, NextApiResponse } from "next";
-
 export interface ResponseData {
   message?: string;
   data?: any;
@@ -10,16 +8,18 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   if (req.method === "GET") {
-    const { gid, gw } = req.query;
-    if (gid && gw) {
+    const { gw } = req.query;
+    if (gw) {
       try {
-        const data = [];
+        const data: Record<string, any> = {};
         for (let i = 1; i <= Number(gw); i++) {
-          let gepick = await fetchPicks(gid as string, i);
-          // console.log("🚀 ~ gepick:", gepick);
-          data.push(gepick);
+          const { elements } = await import(`@/lib/live/${i}.json`);
+          const liveData: Record<string, number> = {};
+          elements.forEach((item: any) => {
+            liveData[item.id] = item.stats.total_points;
+          });
+          data[i] = liveData;
         }
-        // console.log("🚀 ~ data:", data);
         res.status(200).json({
           message: "",
           data,

@@ -56,7 +56,17 @@ export const fetchPicks = async (
   gid: string,
   gw: number
 ): Promise<PointsItem[]> => {
-  const res = await fetch(`${host}/api/entry/${gid}/event/${gw}/picks`);
+  const res = await fetch(`${host}/api/entry/${gid}/event/${gw}/picks`, {
+    mode: "cors",
+  });
+  const repo = await res.json();
+  return repo;
+};
+
+export const fetchLive = async (gw: number): Promise<PointsItem[]> => {
+  const res = await fetch(`${host}/api/event/${gw}/live/`, {
+    mode: "cors",
+  });
   const repo = await res.json();
   return repo;
 };
