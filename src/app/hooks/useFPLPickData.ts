@@ -1,3 +1,4 @@
+import { Elements } from "@/pages/api/fpl/elements";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -34,6 +35,7 @@ interface IPickItem {
 }
 export interface IFPLPickData {
   picks: IPickItem[];
+  elements: Elements;
   updateAt: string;
   userId: string;
   local?: boolean;
@@ -45,43 +47,45 @@ export const useFPLPickData = (
   id: string
 ): IFPLPickData | {} => {
   const [fplPickData, setFplPickData] = useState<IFPLPickData | {}>({});
+  console.log("🚀 ~ getData ~ id:", id);
+  console.log("🚀 ~ getData ~ currentGW:", currentGW);
   useEffect(() => {
     const ls = window.localStorage.getItem(`${lsKey}`);
+    const getData = async (id: string) => {
+      if (id && currentGW) {
+        const tid = toast.loading("Please wait fetching your Data...");
+        const res = await axios.get(`/api/fpl/picks/${id}?gw=${currentGW}`);
+        const eleRes = await axios.get("/api/fpl/elements");
+        // let allPass = true;
+        // for (let i = 0; i < res.length; i++) {
+        //   if (res[i].status !== 200) {
+        //     toast.error(`Fetch ${id} Failed ${res[i].data.message}`);
+        //     allPass = false;
+        //   }
+        // }
+        if (res.status === 200) {
+          const pickData: IFPLPickData = {
+            picks: res.data.data,
+            elements: eleRes.data.data,
+            updateAt: new Date().toISOString(),
+            userId: id,
+          };
+          setFplPickData(pickData);
+          window.localStorage.setItem(`${lsKey}`, JSON.stringify(pickData));
+        }
+        toast.update(tid, {
+          render: `Fetch ${id} Success`,
+          type: "success",
+          isLoading: false,
+        });
+      }
+    };
     if (ls) {
       setFplPickData({ ...JSON.parse(ls), local: true });
     } else {
       getData(id);
     }
-  }, [id]);
-
-  const getData = async (id: string) => {
-    if (id && currentGW) {
-      const tid = toast.loading("Please wait fetching your Data...");
-      const res = await axios.get(`/api/fpl/picks/${id}?gw=${currentGW}`);
-
-      // let allPass = true;
-      // for (let i = 0; i < res.length; i++) {
-      //   if (res[i].status !== 200) {
-      //     toast.error(`Fetch ${id} Failed ${res[i].data.message}`);
-      //     allPass = false;
-      //   }
-      // }
-      if (res.status === 200) {
-        const pickData: IFPLPickData = {
-          picks: res.data.data,
-          updateAt: new Date().toISOString(),
-          userId: id,
-        };
-        setFplPickData(pickData);
-        window.localStorage.setItem(`${lsKey}`, JSON.stringify(pickData));
-      }
-      toast.update(tid, {
-        render: `Fetch ${id} Success`,
-        type: "success",
-        isLoading: false,
-      });
-    }
-  };
+  }, [id, currentGW]);
 
   return fplPickData;
 };

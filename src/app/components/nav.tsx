@@ -18,6 +18,14 @@ export const Nav = () => {
       label: "Value",
       path: "/value",
     },
+    {
+      label: "Picks",
+      path: "/picks",
+    },
+    {
+      label: "Player Points",
+      path: "/playerPoints",
+    },
   ];
   return (
     <ul className="text-sky-800 w-full mt-5">

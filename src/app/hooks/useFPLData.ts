@@ -1,4 +1,3 @@
-import { Elements } from "@/pages/api/fpl/elements";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BasicInfoRes, PointsItem } from "@/lib/fetch";
@@ -7,7 +6,6 @@ import { toast } from "react-toastify";
 export interface IFPLData {
   basicInfo: BasicInfoRes;
   historyInfo: PointsItem[];
-  elements: Elements;
   updateAt: string;
   userId: string;
   local?: boolean;
@@ -30,7 +28,6 @@ export const useFPLData = (onQuery: boolean, id: string): IFPLData | {} => {
         const res = await Promise.all([
           axios.get(`/api/fpl/user/${id}`),
           axios.get(`/api/fpl/history/${id}`),
-          axios.get("/api/fpl/elements"),
         ]);
 
         let allPass = true;
@@ -44,7 +41,6 @@ export const useFPLData = (onQuery: boolean, id: string): IFPLData | {} => {
           const fplData: IFPLData = {
             basicInfo: res[0].data.data,
             historyInfo: res[1].data.data,
-            elements: res[2].data.data,
             updateAt: new Date().toISOString(),
             userId: id,
           };

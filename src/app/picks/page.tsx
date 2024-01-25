@@ -4,14 +4,18 @@ import { IFPLData, useFPLData } from "../hooks/useFPLData";
 import ReactEcharts from "echarts-for-react";
 import { PointsItem } from "@/lib/fetch";
 import { useFPLPickData } from "../hooks/useFPLPickData";
+import { useElements } from "../hooks/useElements";
 
-export default function Player() {
+export default function PlayerChoose() {
   const data = useFPLData(true, "");
-  const basicInfo = data?.basicInfo || {};
+  const { basicInfo } = data as IFPLData;
   const pickData = useFPLPickData(
     basicInfo?.current_event || 1,
-    basicInfo?.id || ""
+    basicInfo?.id ? String(basicInfo?.id) : ""
   );
+  const elements = useElements();
+  console.log("🚀 ~ PlayerChoose ~ elements:", elements);
+  console.log("🚀 ~ Player ~ pickData:", pickData);
   const catArr = useMemo(
     () => [
       {
