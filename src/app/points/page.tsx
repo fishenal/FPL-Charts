@@ -3,10 +3,17 @@ import { useMemo } from "react";
 import { IFPLData, useFPLData } from "../hooks/useFPLData";
 import ReactEcharts from "echarts-for-react";
 import { PointsItem } from "@/lib/fetch";
-
+import useSWR, { SWRConfig } from "swr";
+import { localStorageProvider } from "@/lib/lsProvider";
+import { useAppConfig } from "../hooks/useAppConfig";
+import { fetcher } from "@/lib/fetcher";
 export default function Points() {
-  const data = useFPLData(true, "");
-  // console.log("🚀 ~ Points ~ data:", data);
+  const { id } = useAppConfig();
+  const { data: historyInfo } = useSWR<PointsItem[]>(
+    `/api/fpl/history/${id}`,
+    fetcher
+  );
+  console.log("🚀 ~ Points ~ data:", historyInfo);
   const catArr = useMemo(
     () => [
       {
@@ -30,8 +37,7 @@ export default function Points() {
   );
   const catData = catArr.map((item) => item.label);
   const setSeries = useMemo(() => {
-    if (Object.keys(data).length > 0) {
-      const { historyInfo } = data as IFPLData;
+    if (historyInfo) {
       const seriesData: Record<string, any>[] = [];
 
       catArr.forEach(({ mapKey, label }) => {
@@ -48,11 +54,10 @@ export default function Points() {
       return seriesData;
     }
     return null;
-  }, [data, catArr]);
+  }, [historyInfo, catArr]);
 
   const setXAxis = useMemo(() => {
-    if (Object.keys(data).length > 0) {
-      const { historyInfo } = data as IFPLData;
+    if (historyInfo) {
       const xData = [];
       for (let a = 1; a <= historyInfo.length; a++) {
         xData.push(`GW${a}`);
@@ -60,7 +65,7 @@ export default function Points() {
       return xData;
     }
     return [];
-  }, [data]);
+  }, [historyInfo]);
 
   const option = {
     title: {
