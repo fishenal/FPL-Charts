@@ -1,10 +1,9 @@
 "use client";
 import { useMemo } from "react";
-import { IFPLData, useFPLData } from "../hooks/useFPLData";
 import ReactEcharts from "echarts-for-react";
 import { PointsItem } from "@/lib/fetch";
 import { useAppConfig } from "../hooks/useAppConfig";
-import useSWR, { SWRConfig } from "swr";
+import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 
 export default function Points() {
@@ -51,7 +50,7 @@ export default function Points() {
           }),
         });
       });
-      console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
+      // console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
       return seriesData;
     }
 

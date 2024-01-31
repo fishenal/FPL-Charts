@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect } from "react";
 import { ChangeEvent, useState } from "react";
-import { IFPLData, useFPLData } from "../hooks/useFPLData";
 import { toast } from "react-toastify";
 import { useAppConfig } from "../hooks/useAppConfig";
 import { SolvedBasicInfo, basicInfofetcher, fetcher } from "@/lib/fetcher";
-import useSWR, { SWRConfig } from "swr";
+import useSWR from "swr";
 export const Header = () => {
   const { id, setId } = useAppConfig();
   const [stId, setStId] = useState("");
@@ -13,16 +12,7 @@ export const Header = () => {
     `/api/fpl/user/${id}`,
     basicInfofetcher
   );
-  console.log("🚀 ~ Header ~ userInfoData:", userInfoData);
-  // console.log("🚀 ~ Header ~ data:", data);
   const [showInfo, setShowInfo] = useState(false);
-  // const data = useFPLData(onQuery, id);
-  // console.log("🚀 ~ Header ~ data:", data);
-
-  // useEffect(() => {
-  //   // setOnQuery(false);
-  //   console.log("🚀 ~ Header ~ userInfoData:", userInfoData);
-  // }, [userInfoData]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStId(e.target.value);

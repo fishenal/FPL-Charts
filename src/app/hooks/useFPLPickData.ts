@@ -1,3 +1,4 @@
+// deprecated
 import { Elements } from "@/pages/api/fpl/elements";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -47,8 +48,8 @@ export const useFPLPickData = (
   id: string
 ): IFPLPickData | {} => {
   const [fplPickData, setFplPickData] = useState<IFPLPickData | {}>({});
-  console.log("🚀 ~ getData ~ id:", id);
-  console.log("🚀 ~ getData ~ currentGW:", currentGW);
+  // console.log("🚀 ~ getData ~ id:", id);
+  // console.log("🚀 ~ getData ~ currentGW:", currentGW);
   useEffect(() => {
     const ls = window.localStorage.getItem(`${lsKey}`);
     const getData = async (id: string) => {
