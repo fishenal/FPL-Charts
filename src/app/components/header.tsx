@@ -1,37 +1,50 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { ChangeEvent, useState } from "react";
-
 import { IFPLData, useFPLData } from "../hooks/useFPLData";
 import { toast } from "react-toastify";
+import { useAppConfig } from "../hooks/useAppConfig";
+import { SolvedBasicInfo, basicInfofetcher, fetcher } from "@/lib/fetcher";
+import useSWR, { SWRConfig } from "swr";
 export const Header = () => {
-  const [id, setId] = useState("5524951");
-  const [onQuery, setOnQuery] = useState(false);
+  const { id, setId } = useAppConfig();
+  const [stId, setStId] = useState("");
+  const { data: userInfoData } = useSWR<SolvedBasicInfo>(
+    `/api/fpl/user/${id}`,
+    basicInfofetcher
+  );
+  console.log("🚀 ~ Header ~ userInfoData:", userInfoData);
+  // console.log("🚀 ~ Header ~ data:", data);
   const [showInfo, setShowInfo] = useState(false);
-  const data = useFPLData(onQuery, id);
+  // const data = useFPLData(onQuery, id);
   // console.log("🚀 ~ Header ~ data:", data);
 
+  // useEffect(() => {
+  //   // setOnQuery(false);
+  //   console.log("🚀 ~ Header ~ userInfoData:", userInfoData);
+  // }, [userInfoData]);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
-    setOnQuery(false);
+    setStId(e.target.value);
+    // setOnQuery(false);
   };
 
   const handleSearch = () => {
     // if (/^\d{7}$/.test(id)) {
-    setOnQuery(true);
+    setId(stId);
+    // setOnQuery(true);
     // } else {
     //   toast.error("Please input validate ID, 7 digit");
     // }
   };
 
   const renderDataInfo = () => {
-    if (Object.keys(data).length > 0) {
-      const dt: IFPLData = data as IFPLData;
+    if (userInfoData) {
       return (
         <div>
           <span>
-            Current Data from User {dt.userId}[Team {dt.basicInfo.name}],
-            Updated at [{dt.updateAt}]
+            Current Data from User {userInfoData.id}[Team {userInfoData.name}
+            ], Updated at [{userInfoData.updateAt}]
           </span>
           <span
             onMouseEnter={() => {
@@ -86,30 +99,28 @@ export const Header = () => {
   };
 
   const renderBasicInfo = () => {
-    if (Object.keys(data).length > 0) {
-      const dt: IFPLData = data as IFPLData;
-      const { basicInfo } = dt;
+    if (userInfoData) {
       return (
         <div>
           <p>
             <span className="font-bold">Team Name: </span>
-            {basicInfo.name}
+            {userInfoData.name}
           </p>
           <p>
             <span className="font-bold">Player Name: </span>
-            {basicInfo.player_first_name} {basicInfo.player_last_name}
+            {userInfoData.player_first_name} {userInfoData.player_last_name}
           </p>
           <p>
             <span className="font-bold">Region:</span>{" "}
-            {basicInfo.player_region_name}
+            {userInfoData.player_region_name}
           </p>
           <p>
             <span className="font-bold">Overall Points:</span>{" "}
-            {basicInfo.summary_overall_points}
+            {userInfoData.summary_overall_points}
           </p>
           <p>
             <span className="font-bold">Overall Rank: </span>
-            {basicInfo.summary_overall_rank}
+            {userInfoData.summary_overall_rank}
           </p>
         </div>
       );
@@ -125,7 +136,7 @@ export const Header = () => {
           className="border-solid border border-neutral-300 rounded w-80 h-10 px-2"
           onChange={handleChange}
           placeholder="Please Enter Your gameID"
-          value={id}
+          value={stId}
         />
         <button
           className="border-solid border border-neutral-300 rounded p-2 bg-amber-200 hover:bg-amber-100"

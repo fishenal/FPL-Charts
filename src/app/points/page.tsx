@@ -4,7 +4,6 @@ import { IFPLData, useFPLData } from "../hooks/useFPLData";
 import ReactEcharts from "echarts-for-react";
 import { PointsItem } from "@/lib/fetch";
 import useSWR, { SWRConfig } from "swr";
-import { localStorageProvider } from "@/lib/lsProvider";
 import { useAppConfig } from "../hooks/useAppConfig";
 import { fetcher } from "@/lib/fetcher";
 export default function Points() {
