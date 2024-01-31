@@ -1,3 +1,5 @@
+import { PickDataItem } from "@/pages/api/fpl/picks/[gid]";
+
 export interface BasicInfoRes {
   name: string;
   current_event: number;
@@ -55,7 +57,7 @@ export const fetchPointsHistory = async (
 export const fetchPicks = async (
   gid: string,
   gw: number
-): Promise<PointsItem[]> => {
+): Promise<PickDataItem> => {
   const res = await fetch(`${host}/api/entry/${gid}/event/${gw}/picks`, {
     mode: "cors",
   });

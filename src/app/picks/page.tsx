@@ -1,20 +1,80 @@
 "use client";
 import { useMemo } from "react";
-import { IFPLData, useFPLData } from "../hooks/useFPLData";
 import ReactEcharts from "echarts-for-react";
-import { PointsItem } from "@/lib/fetch";
-import { useFPLPickData } from "../hooks/useFPLPickData";
-import { useElements } from "../hooks/useElements";
+import useSWR from "swr";
+import { SolvedBasicInfo, basicInfofetcher, fetcher } from "@/lib/fetcher";
+import { Elements } from "@/pages/api/fpl/elements";
+import { useAppConfig } from "../hooks/useAppConfig";
+import { PickDataItem } from "@/pages/api/fpl/picks/[gid]";
+
+interface SolvedPicksItem {
+  isCap: boolean;
+  isViceCap: boolean;
+  element: number;
+  subIn: boolean;
+  subOut: boolean;
+  bench: boolean;
+}
+
+interface PlayerStatsItem {
+  name: string;
+  pos: string;
+  team: string;
+  element: number;
+  capTimes: number;
+  viceCapTimes: number;
+  subInTimes: number;
+  subOutTimes: number;
+  benchTimes: number;
+  pickTimes: number;
+}
 
 export default function PlayerChoose() {
-  const data = useFPLData(true, "");
-  const { basicInfo } = data as IFPLData;
-  const pickData = useFPLPickData(
-    basicInfo?.current_event || 1,
-    basicInfo?.id ? String(basicInfo?.id) : ""
+  const { id } = useAppConfig();
+  const { data: userInfoData } = useSWR<SolvedBasicInfo>(
+    `/api/fpl/user/${id}`,
+    basicInfofetcher
   );
-  const elements = useElements();
-  console.log("🚀 ~ PlayerChoose ~ elements:", elements);
+  const { data: pickData } = useSWR<PickDataItem[]>(
+    () =>
+      id && userInfoData?.current_event
+        ? `/api/fpl/picks/${id}?gw=${userInfoData?.current_event}`
+        : null,
+    fetcher
+  );
+  const { data: elements } = useSWR<Elements>("/api/fpl/elements", fetcher);
+
+  const picks = useMemo(() => {
+    if (pickData && elements) {
+      const solvedData: SolvedPicksItem[][] = pickData.map((pickItem) => {
+        return pickItem.picks.map((item, idx) => {
+          let subIn = false;
+          let subOut = false;
+          pickItem.automatic_subs.forEach((subItem) => {
+            if (subItem.element_in === item.element) {
+              subIn = true;
+            }
+            if (subItem.element_out === item.element) {
+              subOut = true;
+            }
+          });
+          return {
+            element: item.element,
+            isCap: item.is_captain,
+            isViceCap: item.is_vice_captain,
+            subIn,
+            subOut,
+            bench: idx > 10,
+          };
+        });
+      });
+      console.log("🚀 ~ solvedData ~ solvedData;:", solvedData);
+      return solvedData;
+    }
+    return;
+  }, [pickData]);
+
+  // console.log("🚀 ~ PlayerChoose ~ elements:", elements);
   console.log("🚀 ~ Player ~ pickData:", pickData);
   const catArr = useMemo(
     () => [
