@@ -1,3 +1,4 @@
+// deprecated
 "use client";
 import { useMemo } from "react";
 import { IFPLData, useFPLData } from "../hooks/useFPLData";
@@ -12,7 +13,7 @@ export default function PlayerPoints() {
   const { basicInfo } = data as IFPLData;
   const liveData = useFPLLiveData(basicInfo?.current_event || 0);
   const elements = useElements();
-  console.log("🚀 ~ Player ~ liveData:", liveData);
+  // console.log("🚀 ~ Player ~ liveData:", liveData);
   const catArr = useMemo(
     () => [
       {
