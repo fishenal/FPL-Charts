@@ -3,6 +3,11 @@ export interface ResponseData {
   message?: string;
   data?: any;
 }
+export interface SimpleLiveData {
+  [gw: number]: {
+    [element: number]: number; // total_point
+  };
+}
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
@@ -14,7 +19,7 @@ export default async function handler(
         const data: Record<string, any> = {};
         for (let i = 1; i <= Number(gw); i++) {
           const { elements } = await import(`@/lib/live/${i}.json`);
-          const liveData: Record<string, number> = {};
+          const liveData: SimpleLiveData = {};
           elements.forEach((item: any) => {
             liveData[item.id] = item.stats.total_points;
           });

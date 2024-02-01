@@ -1,11 +1,12 @@
 "use client";
 import { useMemo } from "react";
-import ReactEcharts from "echarts-for-react";
 import useSWR from "swr";
 import { SolvedBasicInfo, basicInfofetcher, fetcher } from "@/lib/fetcher";
 import { Elements } from "@/pages/api/fpl/elements";
 import { useAppConfig } from "../hooks/useAppConfig";
 import { PickDataItem } from "@/pages/api/fpl/picks/[gid]";
+import { SimpleLiveData } from "@/pages/api/fpl/live/[gw]";
+import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 
 interface SolvedPicksItem {
   isCap: boolean;
@@ -27,8 +28,56 @@ interface PlayerStatsItem {
   subOutTimes: number;
   benchTimes: number;
   pickTimes: number;
+  totalPoints: number;
 }
-
+const columns: GridColDef[] = [
+  { field: "element", headerName: "ID" },
+  { field: "name", headerName: "Name" },
+  {
+    field: "pos",
+    headerName: "Position",
+  },
+  {
+    field: "team",
+    headerName: "Team",
+  },
+  {
+    field: "pickTimes",
+    headerName: "Pick",
+    type: "number",
+  },
+  {
+    field: "benchTimes",
+    headerName: "Bench",
+    type: "number",
+  },
+  {
+    field: "capTimes",
+    headerName: "Captain",
+    type: "number",
+  },
+  {
+    field: "viceCapTimes",
+    headerName: "V-Captain",
+    type: "number",
+  },
+  {
+    field: "subInTimes",
+    headerName: "Sub-in",
+    type: "number",
+  },
+  {
+    field: "subOutTimes",
+    headerName: "Sub-out",
+    type: "number",
+  },
+  {
+    field: "totalPoints",
+    width: 180,
+    headerName: "Points Contribute",
+    type: "number",
+  },
+];
 export default function PlayerChoose() {
   const { id } = useAppConfig();
   const { data: userInfoData } = useSWR<SolvedBasicInfo>(
@@ -42,10 +91,17 @@ export default function PlayerChoose() {
         : null,
     fetcher
   );
+  const { data: liveData } = useSWR<SimpleLiveData>(
+    () =>
+      userInfoData?.current_event
+        ? `/api/fpl/live/${userInfoData?.current_event}`
+        : null,
+    fetcher
+  );
   const { data: elements } = useSWR<Elements>("/api/fpl/elements", fetcher);
-
-  const picks = useMemo(() => {
-    if (pickData && elements) {
+  // console.log("🚀 ~ PlayerChoose ~ liveData:", liveData);
+  const playerStats = useMemo(() => {
+    if (pickData && elements && liveData) {
       const solvedData: SolvedPicksItem[][] = pickData.map((pickItem) => {
         return pickItem.picks.map((item, idx) => {
           let subIn = false;
@@ -68,127 +124,68 @@ export default function PlayerChoose() {
           };
         });
       });
-      console.log("🚀 ~ solvedData ~ solvedData;:", solvedData);
-      return solvedData;
+      const playerStats: PlayerStatsItem[] = [];
+      solvedData.forEach((players, idx) => {
+        const gw = idx + 1;
+        players.forEach((player) => {
+          let current = playerStats.find(
+            (item) => item.element === player.element
+          );
+          if (current) {
+            if (player.isCap) {
+              current.capTimes += 1;
+            }
+            if (player.isViceCap) {
+              current.viceCapTimes += 1;
+            }
+            if (player.subIn) {
+              current.subInTimes += 1;
+            }
+            if (player.subOut) {
+              current.subOutTimes += 1;
+            }
+            if (player.bench) {
+              current.benchTimes += 1;
+            }
+            current.pickTimes += 1;
+            current.totalPoints += liveData[gw][player.element];
+          } else {
+            playerStats.push({
+              name: elements[player.element].web_name,
+              pos: elements[player.element].element_types,
+              team: elements[player.element].team,
+              element: player.element,
+              capTimes: player.isCap ? 1 : 0,
+              viceCapTimes: player.isViceCap ? 1 : 0,
+              subInTimes: player.subIn ? 1 : 0,
+              subOutTimes: player.subOut ? 1 : 0,
+              benchTimes: player.bench ? 1 : 0,
+              pickTimes: 1,
+              totalPoints: liveData[gw][player.element],
+            });
+          }
+        });
+      });
+      // console.log("🚀 ~ playerStats ~ playerStats;:", playerStats);
+      return playerStats;
     }
     return;
-  }, [pickData]);
+  }, [pickData, liveData, elements]);
 
-  // console.log("🚀 ~ PlayerChoose ~ elements:", elements);
-  console.log("🚀 ~ Player ~ pickData:", pickData);
-  const catArr = useMemo(
-    () => [
-      {
-        label: "Total Points",
-        mapKey: "total_points",
-      },
-      {
-        label: "GW Points",
-        mapKey: "points",
-      },
-      {
-        label: "Bench Points",
-        mapKey: "points_on_bench",
-      },
-      {
-        label: "Trans. Cost",
-        mapKey: "event_transfers_cost",
-      },
-    ],
-    []
-  );
-  const catData = catArr.map((item) => item.label);
-  const setSeries = useMemo(
-    () => {
-      // if (Object.keys(data).length > 0) {
-      //   const { historyInfo } = data as IFPLData;
-      //   const seriesData: Record<string, any>[] = [];
-
-      //   catArr.forEach(({ mapKey, label }) => {
-      //     seriesData.push({
-      //       name: label,
-      //       type: "line",
-      //       emphasis: {
-      //         focus: "series",
-      //       },
-      //       data: historyInfo.map((it) => it[mapKey as keyof PointsItem]),
-      //     });
-      //   });
-      //   // console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
-      //   return seriesData;
-      // }
-      return null;
-    },
-    [
-      /*data, catArr*/
-    ]
-  );
-
-  const setXAxis = useMemo(
-    () => {
-      // if (Object.keys(data).length > 0) {
-      //   const { historyInfo } = data as IFPLData;
-      //   const xData = [];
-      //   for (let a = 1; a <= historyInfo.length; a++) {
-      //     xData.push(`GW${a}`);
-      //   }
-      //   return xData;
-      // }
-      return [];
-    },
-    [
-      /*data*/
-    ]
-  );
-
-  const option = {
-    title: {
-      text: "Points Chart",
-    },
-    tooltip: {
-      trigger: "axis",
-      axisPointer: {
-        type: "cross",
-        label: {
-          backgroundColor: "#6a7985",
-        },
-      },
-    },
-    legend: {
-      data: catData,
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-      },
-    },
-    grid: {
-      // containLabel: true,
-      // height: "300",
-    },
-    xAxis: [
-      {
-        type: "category",
-        boundaryGap: false,
-        data: setXAxis,
-      },
-    ],
-    yAxis: [
-      {
-        type: "value",
-      },
-    ],
-    series: setSeries,
-  };
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
       <div className="w-full h-full">
-        <ReactEcharts
-          option={option}
-          style={{
-            height: "500px",
-          }}
-        />
+        {playerStats && (
+          <DataGrid
+            rows={playerStats}
+            columns={columns}
+            disableRowSelectionOnClick
+            disableColumnMenu
+            hideFooter
+            slots={{ toolbar: GridToolbar }}
+            getRowId={(row) => row.element}
+          />
+        )}
       </div>
     </div>
   );

@@ -19,13 +19,13 @@ export const Nav = () => {
       path: "/value",
     },
     {
-      label: "Picks",
+      label: "Your Player Stats",
       path: "/picks",
     },
-    {
-      label: "Player Points",
-      path: "/playerPoints",
-    },
+    // {
+    //   label: "Player Points",
+    //   path: "/playerPoints",
+    // },
   ];
   return (
     <ul className="text-sky-800 w-full mt-5">
