@@ -5,14 +5,15 @@ import { toast } from "react-toastify";
 import { useAppConfig } from "../hooks/useAppConfig";
 import { SolvedBasicInfo, basicInfofetcher, fetcher } from "@/lib/fetcher";
 import useSWR from "swr";
+import { Tooltip, Typography } from "@mui/material";
 export const Header = () => {
   const { id, setId } = useAppConfig();
   const [stId, setStId] = useState("");
+
   const { data: userInfoData } = useSWR<SolvedBasicInfo>(
     `/api/fpl/user/${id}`,
     basicInfofetcher
   );
-  const [showInfo, setShowInfo] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStId(e.target.value);
@@ -27,63 +28,48 @@ export const Header = () => {
     //   toast.error("Please input validate ID, 7 digit");
     // }
   };
-
   const renderDataInfo = () => {
     if (userInfoData) {
       return (
         <div>
-          <span>
+          <Typography variant="h6" gutterBottom>
             Current Data from User {userInfoData.id}[Team {userInfoData.name}
             ], Updated at [{userInfoData.updateAt}]
-          </span>
-          <span
-            onMouseEnter={() => {
-              setShowInfo(true);
-            }}
-            onMouseLeave={() => {
-              setShowInfo(false);
-            }}
-            className="relative"
-          >
-            <svg
-              className="w-6 h-6 inline text-gray-400 hover:text-gray-500"
-              aria-hidden="true"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
+            <Tooltip
+              title={
+                <div className="p-3 space-y-2">
+                  <p>
+                    Data from Your Last Search. Saved in Your Browser
+                    LocalStorage.
+                  </p>
+                  <p>Refresh this Data by Re-search.</p>
+                </div>
+              }
             >
-              <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-            <div
-              data-popover
-              id="popover-description"
-              role="tooltip"
-              className={`${
-                showInfo ? "" : "opacity-0"
-              } left-[-50px] top-[30px] absolute z-10 inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm  w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400`}
-            >
-              <div className="p-3 space-y-2">
-                <p>
-                  Data from Your Last Search. Saved in Your Browser
-                  LocalStorage.
-                </p>
-                <p>Refresh this Data by Re-search.</p>
-              </div>
-            </div>
-          </span>
+              <span className="cursor-pointer">
+                <svg
+                  className="w-6 h-6 inline text-gray-400 hover:text-gray-500"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </span>
+            </Tooltip>
+          </Typography>
         </div>
       );
     } else {
       return (
-        <div>
-          <p>
-            <span>No Available Data, Please Search in Below Input.</span>
-          </p>
-        </div>
+        <Typography variant="h6" gutterBottom>
+          No Available Data, Please Search in Below Input.
+        </Typography>
       );
     }
   };
