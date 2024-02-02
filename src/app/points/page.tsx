@@ -5,9 +5,14 @@ import { HistoryRes, PointsItem } from "@/lib/fetch";
 import useSWR from "swr";
 import { useAppConfig } from "../hooks/useAppConfig";
 import { fetcher } from "@/lib/fetcher";
+import { Box, CircularProgress } from "@mui/material";
 export default function Points() {
   const { id } = useAppConfig();
-  const { data } = useSWR<HistoryRes>(`/api/fpl/history/${id}`, fetcher);
+  const { data, isLoading } = useSWR<HistoryRes>(
+    () => (id ? `/api/fpl/history/${id}` : ""),
+    fetcher
+  );
+
   const historyInfo = data?.current;
   const chips = data?.chips;
   const catArr = useMemo(
@@ -131,12 +136,24 @@ export default function Points() {
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
       <div className="w-full h-full">
-        <ReactEcharts
-          option={option}
-          style={{
-            height: "500px",
-          }}
-        />
+        {isLoading ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: 20,
+            }}
+          >
+            <CircularProgress color="inherit" />
+          </Box>
+        ) : (
+          <ReactEcharts
+            option={option}
+            style={{
+              height: "500px",
+            }}
+          />
+        )}
       </div>
     </div>
   );

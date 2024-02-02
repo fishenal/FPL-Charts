@@ -7,26 +7,22 @@ import { SolvedBasicInfo, basicInfofetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 import dayjs from "dayjs";
 import { Tooltip, Typography } from "@mui/material";
+import { GlobalLoading } from "./globalLoading";
 export const Header = () => {
   const { id, setId } = useAppConfig();
   const [stId, setStId] = useState("");
 
-  const { data: userInfoData } = useSWR<SolvedBasicInfo>(
-    `/api/fpl/user/${id}`,
+  const { data: userInfoData, isLoading } = useSWR<SolvedBasicInfo>(
+    () => (id ? `/api/fpl/user/${id}` : ""),
     basicInfofetcher
   );
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStId(e.target.value);
-    // setOnQuery(false);
   };
 
   const handleSearch = () => {
-    // if (/^\d{7}$/.test(id)) {
     setId(stId);
-    // setOnQuery(true);
-    // } else {
-    //   toast.error("Please input validate ID, 7 digit");
-    // }
   };
   const renderDataInfo = () => {
     if (userInfoData) {
@@ -128,6 +124,7 @@ export const Header = () => {
           Search
         </button>
       </div>
+      <GlobalLoading isLoading={isLoading} />
     </div>
   );
 };

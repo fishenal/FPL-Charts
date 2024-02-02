@@ -7,6 +7,7 @@ import { useAppConfig } from "../hooks/useAppConfig";
 import { PickDataItem } from "@/pages/api/fpl/picks/[gid]";
 import { SimpleLiveData } from "@/pages/api/fpl/live/[gw]";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { Box, CircularProgress } from "@mui/material";
 
 interface SolvedPicksItem {
   isCap: boolean;
@@ -81,17 +82,17 @@ const columns: GridColDef[] = [
 export default function PlayerChoose() {
   const { id } = useAppConfig();
   const { data: userInfoData } = useSWR<SolvedBasicInfo>(
-    `/api/fpl/user/${id}`,
+    () => (id ? `/api/fpl/user/${id}` : ""),
     basicInfofetcher
   );
-  const { data: pickData } = useSWR<PickDataItem[]>(
+  const { data: pickData, isLoading: loading1 } = useSWR<PickDataItem[]>(
     () =>
       id && userInfoData?.current_event
         ? `/api/fpl/picks/${id}?gw=${userInfoData?.current_event}`
         : null,
     fetcher
   );
-  const { data: liveData } = useSWR<SimpleLiveData>(
+  const { data: liveData, isLoading: loading2 } = useSWR<SimpleLiveData>(
     () =>
       userInfoData?.current_event
         ? `/api/fpl/live/${userInfoData?.current_event}`
@@ -175,16 +176,28 @@ export default function PlayerChoose() {
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
       <div className="w-full h-full">
-        {playerStats && (
-          <DataGrid
-            rows={playerStats}
-            columns={columns}
-            disableRowSelectionOnClick
-            disableColumnMenu
-            hideFooter
-            slots={{ toolbar: GridToolbar }}
-            getRowId={(row) => row.element}
-          />
+        {loading1 || loading2 ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: 20,
+            }}
+          >
+            <CircularProgress color="inherit" />
+          </Box>
+        ) : (
+          playerStats && (
+            <DataGrid
+              rows={playerStats}
+              columns={columns}
+              disableRowSelectionOnClick
+              disableColumnMenu
+              hideFooter
+              slots={{ toolbar: GridToolbar }}
+              getRowId={(row) => row.element}
+            />
+          )
         )}
       </div>
     </div>
