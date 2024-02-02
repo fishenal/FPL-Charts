@@ -3,8 +3,9 @@ import React, { useEffect } from "react";
 import { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { useAppConfig } from "../hooks/useAppConfig";
-import { SolvedBasicInfo, basicInfofetcher, fetcher } from "@/lib/fetcher";
+import { SolvedBasicInfo, basicInfofetcher } from "@/lib/fetcher";
 import useSWR from "swr";
+import dayjs from "dayjs";
 import { Tooltip, Typography } from "@mui/material";
 export const Header = () => {
   const { id, setId } = useAppConfig();
@@ -14,7 +15,6 @@ export const Header = () => {
     `/api/fpl/user/${id}`,
     basicInfofetcher
   );
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStId(e.target.value);
     // setOnQuery(false);
@@ -33,8 +33,7 @@ export const Header = () => {
       return (
         <div>
           <Typography variant="h6" gutterBottom>
-            Current Data from User {userInfoData.id}[Team {userInfoData.name}
-            ], Updated at [{userInfoData.updateAt}]
+            Current Data from User {userInfoData.id}
             <Tooltip
               title={
                 <div className="p-3 space-y-2">
@@ -97,6 +96,14 @@ export const Header = () => {
           <p>
             <span className="font-bold">Overall Rank: </span>
             {userInfoData.summary_overall_rank}
+          </p>
+          <p>
+            <span className="font-bold">UpdateTime: </span>
+            {dayjs(userInfoData.updateAt).format()}
+          </p>
+          <p>
+            <span className="font-bold">Until GW: </span>
+            {userInfoData.current_event}
           </p>
         </div>
       );
