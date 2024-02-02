@@ -24,6 +24,15 @@ export interface PointsItem {
   event_transfers_cost: number;
   points_on_bench: number;
 }
+
+export interface ChipsItem {
+  event: number;
+  name: string;
+}
+export interface HistoryRes {
+  current: PointsItem[];
+  chips: ChipsItem[];
+}
 export interface UserData {
   basicInfo: BasicInfoRes;
   historyInfo: PointsItem[];
@@ -46,12 +55,10 @@ export const fetchBasicInfo = async (gid: string): Promise<BasicInfoRes> => {
   };
 };
 
-export const fetchPointsHistory = async (
-  gid: string
-): Promise<PointsItem[]> => {
+export const fetchPointsHistory = async (gid: string): Promise<HistoryRes> => {
   const res = await fetch(`${host}/api/entry/${gid}/history`);
   const repo = await res.json();
-  return repo.current;
+  return repo;
 };
 
 export const fetchPicks = async (

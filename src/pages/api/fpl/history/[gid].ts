@@ -1,14 +1,9 @@
-import {
-  BasicInfoRes,
-  PointsItem,
-  fetchBasicInfo,
-  fetchPointsHistory,
-} from "@/lib/fetch";
+import { HistoryRes, fetchPointsHistory } from "@/lib/fetch";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export interface ResponseData {
   message?: string;
-  data?: PointsItem[];
+  data?: HistoryRes;
 }
 export default async function handler(
   req: NextApiRequest,
@@ -18,10 +13,10 @@ export default async function handler(
     const { gid } = req.query;
     if (gid) {
       try {
-        const historyInfo = await fetchPointsHistory(gid as string);
+        const data = await fetchPointsHistory(gid as string);
         res.status(200).json({
-          message: "",
-          data: historyInfo,
+          message: "success",
+          data,
         });
       } catch (err) {
         res.status(500).json({ message: err as string });

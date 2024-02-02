@@ -1,16 +1,15 @@
 "use client";
 import { useMemo } from "react";
 import ReactEcharts from "echarts-for-react";
-import { PointsItem } from "@/lib/fetch";
+import { HistoryRes, PointsItem } from "@/lib/fetch";
 import useSWR from "swr";
 import { useAppConfig } from "../hooks/useAppConfig";
 import { fetcher } from "@/lib/fetcher";
 export default function Points() {
   const { id } = useAppConfig();
-  const { data: historyInfo } = useSWR<PointsItem[]>(
-    `/api/fpl/history/${id}`,
-    fetcher
-  );
+  const { data } = useSWR<HistoryRes>(`/api/fpl/history/${id}`, fetcher);
+  const historyInfo = data?.current;
+  const chips = data?.chips;
   const catArr = useMemo(
     () => [
       {
@@ -38,12 +37,32 @@ export default function Points() {
       const seriesData: Record<string, any>[] = [];
 
       catArr.forEach(({ mapKey, label }) => {
+        let markPoint;
+        const chipsUsed = chips?.map((item) => {
+          return {
+            value: item.name,
+            itemStyle: {
+              color: "red",
+            },
+            coord: [item.event - 1, 0],
+          };
+        });
+        if (mapKey === "points" && chipsUsed) {
+          markPoint = {
+            data: [
+              { symbol: "diamond", type: "max", name: "Max" },
+              { symbol: "diamond", type: "min", name: "Min" },
+              ...chipsUsed,
+            ],
+          };
+        }
         seriesData.push({
           name: label,
           type: "line",
           emphasis: {
             focus: "series",
           },
+          markPoint,
           data: historyInfo.map((it) => it[mapKey as keyof PointsItem]),
         });
       });
@@ -51,7 +70,7 @@ export default function Points() {
       return seriesData;
     }
     return null;
-  }, [historyInfo, catArr]);
+  }, [historyInfo, catArr, chips]);
 
   const setXAxis = useMemo(() => {
     if (historyInfo) {
@@ -79,6 +98,9 @@ export default function Points() {
     },
     legend: {
       data: catData,
+      selected: {
+        "Total Points": false,
+      },
     },
     toolbox: {
       feature: {
