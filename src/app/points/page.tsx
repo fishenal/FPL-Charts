@@ -44,14 +44,17 @@ export default function Points() {
             itemStyle: {
               color: "red",
             },
+            symbol: "triangle",
+            symbolSize: 40,
+            symbolOffset: [0, 30],
             coord: [item.event - 1, 0],
           };
         });
         if (mapKey === "points" && chipsUsed) {
           markPoint = {
             data: [
-              { symbol: "diamond", type: "max", name: "Max" },
-              { symbol: "diamond", type: "min", name: "Min" },
+              { type: "max", name: "Max" },
+              { type: "min", name: "Min" },
               ...chipsUsed,
             ],
           };

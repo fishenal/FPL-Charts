@@ -1,17 +1,15 @@
 "use client";
 import { useMemo } from "react";
 import ReactEcharts from "echarts-for-react";
-import { PointsItem } from "@/lib/fetch";
+import { HistoryRes, PointsItem } from "@/lib/fetch";
 import { useAppConfig } from "../hooks/useAppConfig";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 
 export default function Points() {
   const { id } = useAppConfig();
-  const { data: historyInfo } = useSWR<PointsItem[]>(
-    `/api/fpl/history/${id}`,
-    fetcher
-  );
+  const { data } = useSWR<HistoryRes>(`/api/fpl/history/${id}`, fetcher);
+  const historyInfo = data?.current;
   const catArr = useMemo(
     () => [
       {
@@ -82,6 +80,9 @@ export default function Points() {
     },
     legend: {
       data: catData,
+      selected: {
+        "Team Value": false,
+      },
     },
     toolbox: {
       feature: {

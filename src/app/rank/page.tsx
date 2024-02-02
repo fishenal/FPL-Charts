@@ -2,17 +2,15 @@
 import { useMemo } from "react";
 import { IFPLData, useFPLData } from "../hooks/useFPLData";
 import ReactEcharts from "echarts-for-react";
-import { PointsItem } from "@/lib/fetch";
+import { HistoryRes, PointsItem } from "@/lib/fetch";
 import { useAppConfig } from "../hooks/useAppConfig";
 import useSWR, { SWRConfig } from "swr";
 import { fetcher } from "@/lib/fetcher";
 
 export default function Points() {
   const { id } = useAppConfig();
-  const { data: historyInfo } = useSWR<PointsItem[]>(
-    `/api/fpl/history/${id}`,
-    fetcher
-  );
+  const { data } = useSWR<HistoryRes>(`/api/fpl/history/${id}`, fetcher);
+  const historyInfo = data?.current;
   const catArr = useMemo(
     () => [
       {
@@ -37,6 +35,12 @@ export default function Points() {
           type: "line",
           emphasis: {
             focus: "series",
+          },
+          markPoint: {
+            data: [
+              { type: "max", name: "Max" },
+              { type: "min", name: "Min" },
+            ],
           },
           data: historyInfo.map((it) => it[mapKey as keyof PointsItem]),
         });
