@@ -2,9 +2,12 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export const Nav = () => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const demo = searchParams?.get("demo");
   const navs = [
     {
       label: "Points",
@@ -32,7 +35,7 @@ export const Nav = () => {
       {navs.map(({ label, path }, idx) => (
         <li className="mx-2" key={idx}>
           <Link
-            href={path + window?.location?.search}
+            href={path + (demo ? "?demo=1" : "")}
             className={`py-1 px-2 mt-2 hover:bg-amber-200 w-full block rounded-md ${
               pathname === path ? "bg-amber-200" : ""
             }`}
