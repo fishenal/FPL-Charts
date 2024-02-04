@@ -177,7 +177,7 @@ export default function PlayerChoose() {
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
       <Typography variant="h6" gutterBottom>
-        Analysis Your FPL Picks Stats Table
+        Analytics of Your FPL Picks Stats Table
       </Typography>
       <div className="w-full h-full">
         {loading1 || loading2 ? (
