@@ -18,12 +18,16 @@ export default async function handler(
       try {
         const data: Record<string, any> = {};
         for (let i = 1; i <= Number(gw); i++) {
-          const { elements } = await import(`@/lib/live/${i}.json`);
-          const liveData: SimpleLiveData = {};
-          elements.forEach((item: any) => {
-            liveData[item.id] = item.stats.total_points;
-          });
-          data[i] = liveData;
+          try {
+            const { elements } = await import(`@/lib/live/${i}.json`);
+            const liveData: SimpleLiveData = {};
+            elements.forEach((item: any) => {
+              liveData[item.id] = item.stats.total_points;
+            });
+            data[i] = liveData;
+          } catch {
+            continue;
+          }
         }
         res.status(200).json({
           message: "",

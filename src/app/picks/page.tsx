@@ -7,7 +7,7 @@ import { useAppConfig } from "../hooks/useAppConfig";
 import { PickDataItem } from "@/pages/api/fpl/picks/[gid]";
 import { SimpleLiveData } from "@/pages/api/fpl/live/[gw]";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 interface SolvedPicksItem {
   isCap: boolean;
@@ -132,6 +132,7 @@ export default function PlayerChoose() {
           let current = playerStats.find(
             (item) => item.element === player.element
           );
+          let gwPoint = liveData?.[gw]?.[player.element] || 0;
           if (current) {
             if (player.isCap) {
               current.capTimes += 1;
@@ -149,7 +150,7 @@ export default function PlayerChoose() {
               current.benchTimes += 1;
             }
             current.pickTimes += 1;
-            current.totalPoints += liveData[gw][player.element];
+            current.totalPoints += gwPoint;
           } else {
             playerStats.push({
               name: elements[player.element].web_name,
@@ -162,7 +163,7 @@ export default function PlayerChoose() {
               subOutTimes: player.subOut ? 1 : 0,
               benchTimes: player.bench ? 1 : 0,
               pickTimes: 1,
-              totalPoints: liveData[gw][player.element],
+              totalPoints: gwPoint,
             });
           }
         });
@@ -175,6 +176,9 @@ export default function PlayerChoose() {
 
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
+      <Typography variant="h6" gutterBottom>
+        Analysis Your FPL Picks Stats
+      </Typography>
       <div className="w-full h-full">
         {loading1 || loading2 ? (
           <Box
