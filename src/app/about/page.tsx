@@ -4,6 +4,9 @@ import { Typography } from "@mui/material";
 export default function About() {
   return (
     <div className="flex flex-col gap-2 py-8 w-full h-full">
+      <Typography variant="h4" gutterBottom>
+        About
+      </Typography>
       <Typography gutterBottom>
         This Site is created by fishenal, a FPL Player(ID: 5524951), and an
         Experienced Web Developer in Shanghai/China.

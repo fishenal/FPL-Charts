@@ -5,7 +5,7 @@ import { HistoryRes, PointsItem } from "@/lib/fetch";
 import { useAppConfig } from "../hooks/useAppConfig";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 export default function Points() {
   const { id } = useAppConfig();
@@ -113,6 +113,9 @@ export default function Points() {
   };
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
+      <Typography variant="h6" gutterBottom>
+        Your FPL Team Rank Bar Chart
+      </Typography>
       <div className="w-full h-full">
         {isLoading ? (
           <Box
