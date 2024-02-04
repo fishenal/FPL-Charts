@@ -9,8 +9,20 @@ import history from "./demo/history";
 export interface SolvedBasicInfo extends BasicInfoRes {
   updateAt: string;
 }
+export const checkInDemo = () => {
+  if (typeof window === "undefined") {
+    return false;
+  }
+  if (!window?.location?.search) {
+    return false;
+  }
+  if (window.location.search.indexOf("demo") > -1) {
+    return true;
+  }
+  return false;
+};
 export const userIdfetcher = (key: string) => {
-  if (window.location.search === "?demo") {
+  if (checkInDemo()) {
     return "5524951";
   }
   const lsId = window.localStorage.getItem(idLsKey);
@@ -20,7 +32,7 @@ export const userIdfetcher = (key: string) => {
   return "";
 };
 export const fetcher = (url: string) => {
-  if (window.location.search === "?demo") {
+  if (checkInDemo()) {
     if (url.indexOf("elements") > -1) {
       return elements;
     }
@@ -46,7 +58,7 @@ export const fetcher = (url: string) => {
 };
 
 export const basicInfofetcher = (url: string) => {
-  if (window.location.search === "?demo") {
+  if (checkInDemo()) {
     return basicInfo;
   }
 

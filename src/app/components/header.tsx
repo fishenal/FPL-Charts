@@ -3,10 +3,10 @@ import React, { useEffect } from "react";
 import { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { useAppConfig } from "../hooks/useAppConfig";
-import { SolvedBasicInfo, basicInfofetcher } from "@/lib/fetcher";
+import { SolvedBasicInfo, basicInfofetcher, checkInDemo } from "@/lib/fetcher";
 import useSWR from "swr";
 import dayjs from "dayjs";
-import { Tooltip, Typography } from "@mui/material";
+import { Alert, Button, Tooltip, Typography } from "@mui/material";
 import { GlobalLoading } from "./globalLoading";
 export const Header = () => {
   const { id, setId } = useAppConfig();
@@ -28,6 +28,25 @@ export const Header = () => {
     if (userInfoData) {
       return (
         <div>
+          {checkInDemo() && (
+            <Alert
+              severity="info"
+              sx={{
+                alignItems: "center",
+                marginBottom: 4,
+              }}
+            >
+              This is Demo Mode,{" "}
+              <Button
+                onClick={() => {
+                  window.location.href = "/points";
+                }}
+              >
+                To Normal Mode
+              </Button>
+            </Alert>
+          )}
+
           <Typography variant="h6" gutterBottom>
             Current Data from User {userInfoData.id}
             <Tooltip
@@ -64,6 +83,13 @@ export const Header = () => {
       return (
         <Typography variant="h6" gutterBottom>
           No Available Data, Please Search in Below Input.
+          <Button
+            onClick={() => {
+              window.location.href = "/points/?demo=1";
+            }}
+          >
+            See Demo Mode
+          </Button>
         </Typography>
       );
     }

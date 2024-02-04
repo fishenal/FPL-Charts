@@ -32,7 +32,7 @@ export const Nav = () => {
       {navs.map(({ label, path }, idx) => (
         <li className="mx-2" key={idx}>
           <Link
-            href={path}
+            href={path + window?.location?.search}
             className={`py-1 px-2 mt-2 hover:bg-amber-200 w-full block rounded-md ${
               pathname === path ? "bg-amber-200" : ""
             }`}
