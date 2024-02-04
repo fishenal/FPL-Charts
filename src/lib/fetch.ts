@@ -1,5 +1,8 @@
+import { PickDataItem } from "@/pages/api/fpl/picks/[gid]";
+
 export interface BasicInfoRes {
   name: string;
+  current_event: number;
   player_first_name: string;
   player_last_name: string;
   player_region_name: string;
@@ -21,6 +24,15 @@ export interface PointsItem {
   event_transfers_cost: number;
   points_on_bench: number;
 }
+
+export interface ChipsItem {
+  event: number;
+  name: string;
+}
+export interface HistoryRes {
+  current: PointsItem[];
+  chips: ChipsItem[];
+}
 export interface UserData {
   basicInfo: BasicInfoRes;
   historyInfo: PointsItem[];
@@ -39,15 +51,33 @@ export const fetchBasicInfo = async (gid: string): Promise<BasicInfoRes> => {
     summary_overall_points: repo.summary_overall_points,
     summary_overall_rank: repo.summary_overall_rank,
     id: repo.id,
+    current_event: repo.current_event,
   };
 };
 
-export const fetchPointsHistory = async (
-  gid: string
-): Promise<PointsItem[]> => {
+export const fetchPointsHistory = async (gid: string): Promise<HistoryRes> => {
   const res = await fetch(`${host}/api/entry/${gid}/history`);
   const repo = await res.json();
-  return repo.current;
+  return repo;
+};
+
+export const fetchPicks = async (
+  gid: string,
+  gw: number
+): Promise<PickDataItem> => {
+  const res = await fetch(`${host}/api/entry/${gid}/event/${gw}/picks`, {
+    mode: "cors",
+  });
+  const repo = await res.json();
+  return repo;
+};
+
+export const fetchLive = async (gw: number): Promise<PointsItem[]> => {
+  const res = await fetch(`${host}/api/event/${gw}/live/`, {
+    mode: "cors",
+  });
+  const repo = await res.json();
+  return repo;
 };
 
 export const fetchStaticData = async () => {
