@@ -22,10 +22,10 @@ export const Nav = () => {
       label: "Your Player Stats",
       path: "/picks",
     },
-    // {
-    //   label: "Player Points",
-    //   path: "/playerPoints",
-    // },
+    {
+      label: "About",
+      path: "/about",
+    },
   ];
   return (
     <ul className="text-sky-800 w-full mt-5">

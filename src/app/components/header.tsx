@@ -8,7 +8,9 @@ import useSWR from "swr";
 import dayjs from "dayjs";
 import { Alert, Button, Tooltip, Typography } from "@mui/material";
 import { GlobalLoading } from "./globalLoading";
+import { usePathname } from "next/navigation";
 export const Header = () => {
+  const pathname = usePathname();
   const { id, setId } = useAppConfig();
   const [stId, setStId] = useState("");
 
@@ -132,6 +134,9 @@ export const Header = () => {
     }
     return null;
   };
+  if (pathname && pathname?.indexOf("about") > -1) {
+    return null;
+  }
   return (
     <div className="flex items-start flex-col gap-4 border-solid border-b border-neutral-100 py-5">
       {renderDataInfo()}
