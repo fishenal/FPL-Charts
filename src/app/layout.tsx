@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Grid } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -74,6 +75,7 @@ export default function RootLayout({
           </Grid>
         </Grid>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
