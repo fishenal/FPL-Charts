@@ -46,12 +46,14 @@ export const fetcher = (url: string) => {
       return picks;
     }
   }
-  const ls = window.localStorage.getItem(url);
+  const lsKey = url.split("?")[0];
+  const ls = window.localStorage.getItem(lsKey);
+
   if (ls) {
     return JSON.parse(ls);
   } else {
     return axios.get(url).then((res) => {
-      window.localStorage.setItem(url, JSON.stringify(res.data.data));
+      window.localStorage.setItem(lsKey, JSON.stringify(res.data.data));
       return res.data.data;
     });
   }
