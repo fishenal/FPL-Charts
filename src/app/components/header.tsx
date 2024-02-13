@@ -24,7 +24,11 @@ export const Header = () => {
   };
 
   const handleSearch = () => {
-    setId(stId);
+    if (/^\d+$/.test(stId)) {
+      setId(stId);
+    } else {
+      toast.warning("ID need to be numbers");
+    }
   };
   const renderDataInfo = () => {
     if (userInfoData) {
