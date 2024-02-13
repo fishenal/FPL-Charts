@@ -6,13 +6,14 @@ import useSWR from "swr";
 import { useAppConfig } from "../hooks/useAppConfig";
 import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
+import { Events } from "@/pages/api/fpl/events";
 export default function Points() {
   const { id } = useAppConfig();
   const { data, isLoading } = useSWR<HistoryRes>(
     () => (id ? `/api/fpl/history/${id}` : ""),
     fetcher
   );
-
+  const { data: events } = useSWR<Events>("/api/fpl/events", fetcher);
   const historyInfo = data?.current;
   const chips = data?.chips;
   const catArr = useMemo(
@@ -33,6 +34,14 @@ export default function Points() {
         label: "Trans. Cost",
         mapKey: "event_transfers_cost",
       },
+      {
+        label: "GW Avg.",
+        mapKey: "gw_avg",
+      },
+      {
+        label: "GW Max",
+        mapKey: "gw_max",
+      },
     ],
     []
   );
@@ -43,6 +52,8 @@ export default function Points() {
 
       catArr.forEach(({ mapKey, label }) => {
         let markPoint;
+        const isGwData = mapKey === "gw_max" || mapKey === "gw_avg";
+
         const chipsUsed = chips?.map((item) => {
           return {
             value: item.name,
@@ -64,21 +75,43 @@ export default function Points() {
             ],
           };
         }
+        const getData = () => {
+          if (mapKey === "gw_max") {
+            return events?.map((it) => it.highest_score);
+          }
+          if (mapKey === "gw_avg") {
+            return events?.map((it) => it.average_entry_score);
+          }
+          return historyInfo.map((it) => it[mapKey as keyof PointsItem]);
+        };
+        let lineStyle = {};
+        let itemStyle = {};
+        if (isGwData) {
+          lineStyle = {
+            color: "#ddd",
+            type: "dashed",
+          };
+          itemStyle = {
+            color: "#999",
+          };
+        }
         seriesData.push({
           name: label,
           type: "line",
           emphasis: {
             focus: "series",
           },
+          lineStyle,
+          itemStyle,
           markPoint,
-          data: historyInfo.map((it) => it[mapKey as keyof PointsItem]),
+          data: getData(),
         });
       });
       // console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
       return seriesData;
     }
     return null;
-  }, [historyInfo, catArr, chips]);
+  }, [historyInfo, catArr, chips, events]);
 
   const setXAxis = useMemo(() => {
     if (historyInfo) {

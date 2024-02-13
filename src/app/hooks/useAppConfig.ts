@@ -14,6 +14,7 @@ export const useAppConfig = (): appConfig => {
     window.localStorage.removeItem(`/api/fpl/user/${id}`);
     window.localStorage.removeItem(`/api/fpl/picks/${id}`);
     window.localStorage.removeItem(idLsKey);
+    window.localStorage.removeItem("/api/fpl/events");
   };
   const setId = (id: string) => {
     removeLocal(id);
