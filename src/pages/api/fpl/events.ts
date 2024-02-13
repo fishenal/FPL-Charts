@@ -1,4 +1,3 @@
-import { staticData } from "@/lib/staticData";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 interface ResponseData {
@@ -34,6 +33,7 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   if (req.method === "GET") {
+    const staticData = await import("@/lib/staticData.json");
     res.status(200).json({
       message: "success",
       data: staticData.events,
