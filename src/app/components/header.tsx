@@ -25,7 +25,7 @@ export const Header = () => {
 
   const handleSearch = () => {
     if (/^\d+$/.test(stId)) {
-      setId(id);
+      setId(stId);
     } else {
       toast.warning("ID need to be numbers");
     }
