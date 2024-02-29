@@ -48,6 +48,35 @@ export default function RootLayout({
           />
         </a>
       </div>
+      <Typography variant="h4" gutterBottom>
+        帮助和支持
+      </Typography>
+      <Typography gutterBottom>本APP由fishenal设计制作，欢迎使用</Typography>
+      <Typography gutterBottom>
+        如果你对我的其他项目感兴趣，请访问这里
+        <a
+          href="https://github.com/fishenal"
+          target="_blank"
+          style={{
+            textDecoration: "underline",
+            fontWeight: "bold",
+          }}
+        >
+          https://github.com/fishenal
+        </a>
+      </Typography>
+      <Typography gutterBottom>
+        如果你有意见反馈，请发送邮件到：
+        <a
+          href="mailTo:yu_dong_han@hotmail.com"
+          style={{
+            textDecoration: "underline",
+            fontWeight: "bold",
+          }}
+        >
+          yu_dong_han@hotmail.com
+        </a>
+      </Typography>
     </div>
   );
 }
