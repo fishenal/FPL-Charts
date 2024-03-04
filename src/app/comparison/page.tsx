@@ -6,15 +6,14 @@ import useSWR from "swr";
 import { useAppConfig } from "../hooks/useAppConfig";
 import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { Events } from "@/pages/api/fpl/events";
-import { UserInfoHeader } from "../components/userInfoHeader";
+import { ComparisonHeader } from "../components/comparisonHeader";
 export default function Points() {
   const { id } = useAppConfig();
   const { data, isLoading } = useSWR<HistoryRes>(
     () => (id ? `/api/fpl/history/${id}` : ""),
     fetcher
   );
-  const { data: events } = useSWR<Events>("/api/fpl/events", fetcher);
+
   const historyInfo = data?.current;
   const chips = data?.chips;
   const catArr = useMemo(
@@ -35,14 +34,6 @@ export default function Points() {
         label: "Trans. Cost",
         mapKey: "event_transfers_cost",
       },
-      {
-        label: "GW Avg.",
-        mapKey: "gw_avg",
-      },
-      {
-        label: "GW Max",
-        mapKey: "gw_max",
-      },
     ],
     []
   );
@@ -53,8 +44,6 @@ export default function Points() {
 
       catArr.forEach(({ mapKey, label }) => {
         let markPoint;
-        const isGwData = mapKey === "gw_max" || mapKey === "gw_avg";
-
         const chipsUsed = chips?.map((item) => {
           return {
             value: item.name,
@@ -76,43 +65,21 @@ export default function Points() {
             ],
           };
         }
-        const getData = () => {
-          if (mapKey === "gw_max") {
-            return events?.map((it) => it.highest_score);
-          }
-          if (mapKey === "gw_avg") {
-            return events?.map((it) => it.average_entry_score);
-          }
-          return historyInfo.map((it) => it[mapKey as keyof PointsItem]);
-        };
-        let lineStyle = {};
-        let itemStyle = {};
-        if (isGwData) {
-          lineStyle = {
-            color: "#ddd",
-            type: "dashed",
-          };
-          itemStyle = {
-            color: "#999",
-          };
-        }
         seriesData.push({
           name: label,
           type: "line",
           emphasis: {
             focus: "series",
           },
-          lineStyle,
-          itemStyle,
           markPoint,
-          data: getData(),
+          data: historyInfo.map((it) => it[mapKey as keyof PointsItem]),
         });
       });
       // console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
       return seriesData;
     }
     return null;
-  }, [historyInfo, catArr, chips, events]);
+  }, [historyInfo, catArr, chips]);
 
   const setXAxis = useMemo(() => {
     if (historyInfo) {
@@ -169,9 +136,10 @@ export default function Points() {
   };
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
-      <UserInfoHeader />
+      <ComparisonHeader />
       <Typography variant="h6" gutterBottom>
-        Your FPL Team Points Line Chart
+        Comparison Page can help to compare two FPL players points & rank by
+        GWs.
       </Typography>
       <div className="w-full h-full">
         {isLoading ? (

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "./components/header";
 import { Nav } from "./components/nav";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -58,7 +57,6 @@ export default function RootLayout({
               paddingX: 5,
             }}
           >
-            <Header />
             <div className="flex">{children}</div>
             <ToastContainer
               position="bottom-right"

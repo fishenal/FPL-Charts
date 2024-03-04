@@ -6,10 +6,10 @@ import { useAppConfig } from "../hooks/useAppConfig";
 import { SolvedBasicInfo, basicInfofetcher, checkInDemo } from "@/lib/fetcher";
 import useSWR from "swr";
 import dayjs from "dayjs";
-import { Alert, Button, TextField, Tooltip, Typography } from "@mui/material";
+import { Alert, Button, Tooltip, Typography } from "@mui/material";
 import { GlobalLoading } from "./globalLoading";
 import { usePathname } from "next/navigation";
-export const Header = () => {
+export const ComparisonHeader = () => {
   const pathname = usePathname();
   const { id, setId } = useAppConfig();
   const [stId, setStId] = useState("");
@@ -24,21 +24,8 @@ export const Header = () => {
   };
 
   const handleSearch = () => {
-    if (/^\d+$/.test(stId)) {
-      setId(stId);
-    } else {
-      toast.warning("ID need to be numbers");
-    }
+    setId(stId);
   };
-
-  const updateId = () => {
-    if (/^\d+$/.test(id)) {
-      setId(id);
-    } else {
-      toast.warning("ID need to be numbers");
-    }
-  };
-
   const renderDataInfo = () => {
     if (userInfoData) {
       return (
@@ -91,15 +78,6 @@ export const Header = () => {
                 </svg>
               </span>
             </Tooltip>
-            <Button
-              onClick={updateId}
-              variant="outlined"
-              sx={{
-                marginLeft: 3,
-              }}
-            >
-              Update My Data
-            </Button>
           </Typography>
         </div>
       );
@@ -110,10 +88,6 @@ export const Header = () => {
           <Button
             onClick={() => {
               window.location.href = "/points/?demo=1";
-            }}
-            variant="outlined"
-            sx={{
-              marginLeft: 3,
             }}
           >
             See Demo Mode
@@ -164,23 +138,22 @@ export const Header = () => {
     return null;
   }
   return (
-    <div className="flex items-start flex-col gap-4 py-5">
+    <div className="flex items-start flex-col gap-4 border-solid border-b border-neutral-100 py-5 w-full">
       {renderDataInfo()}
       {renderBasicInfo()}
       <div className="flex gap-2">
-        <TextField
-          label="Please Enter GameID"
-          variant="outlined"
+        <input
+          className="border-solid border border-neutral-300 rounded w-80 h-10 px-2"
           onChange={handleChange}
+          placeholder="Please Enter Your gameID"
           value={stId}
         />
-        <Button
+        <button
+          className="border-solid border border-neutral-300 rounded p-2 bg-amber-200 hover:bg-amber-100"
           onClick={handleSearch}
-          variant="outlined"
-          // className="bg-amber-500 hover:bg-amber-400"
         >
           Search
-        </Button>
+        </button>
       </div>
       <GlobalLoading isLoading={isLoading} />
     </div>

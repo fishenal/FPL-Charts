@@ -8,6 +8,7 @@ import { PickDataItem } from "@/pages/api/fpl/picks/[gid]";
 import { SimpleLiveData } from "@/pages/api/fpl/live/[gw]";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { Box, CircularProgress, Typography } from "@mui/material";
+import { UserInfoHeader } from "../components/userInfoHeader";
 
 interface SolvedPicksItem {
   isCap: boolean;
@@ -176,6 +177,7 @@ export default function PlayerChoose() {
 
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
+      <UserInfoHeader />
       <Typography variant="h6" gutterBottom>
         Analytics of Your FPL Picks Stats Table
       </Typography>
