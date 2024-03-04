@@ -7,6 +7,7 @@ import { useAppConfig } from "../hooks/useAppConfig";
 import useSWR, { SWRConfig } from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
+import { UserInfoHeader } from "../components/userInfoHeader";
 
 export default function Points() {
   const { id } = useAppConfig();
@@ -106,6 +107,7 @@ export default function Points() {
   };
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
+      <UserInfoHeader />
       <Typography variant="h6" gutterBottom>
         Your FPL Team Rank Line Chart
       </Typography>
