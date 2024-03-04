@@ -21,9 +21,8 @@ export const ComparisonHeader = ({
   useEffect(() => {
     const initIds = window.localStorage.getItem(comparisonIdKey);
     if (initIds) {
-      JSON.parse(initIds);
+      setIdList(JSON.parse(initIds));
     }
-    setIdList();
   }, []);
   const handleIdsDelete = (id: string) => {
     const newList = idList.filter((item) => item.id !== id);
