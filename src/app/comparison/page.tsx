@@ -1,145 +1,152 @@
 "use client";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import ReactEcharts from "echarts-for-react";
-import { HistoryRes, PointsItem } from "@/lib/fetch";
+import { PointsItem } from "@/lib/fetch";
 import useSWR from "swr";
-import { useAppConfig } from "../hooks/useAppConfig";
-import { fetcher } from "@/lib/fetcher";
+import { multiFetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { ComparisonHeader } from "../components/comparisonHeader";
+import { ComparisonHeader, idsItem } from "../components/comparisonHeader";
 export default function Points() {
-  const { id } = useAppConfig();
-  const { data, isLoading } = useSWR<HistoryRes>(
-    () => (id ? `/api/fpl/history/${id}` : ""),
-    fetcher
+  const [idList, setIdList] = useState<idsItem[]>([]);
+  const { data: hisData, isLoading } = useSWR(
+    idList.length > 0 &&
+      idList.map((idItem) => `/api/fpl/history/${idItem.id}`),
+    multiFetcher
   );
 
-  const historyInfo = data?.current;
-  const chips = data?.chips;
-  const catArr = useMemo(
-    () => [
-      {
-        label: "Total Points",
-        mapKey: "total_points",
-      },
-      {
-        label: "GW Points",
-        mapKey: "points",
-      },
-      {
-        label: "Bench Points",
-        mapKey: "points_on_bench",
-      },
-      {
-        label: "Trans. Cost",
-        mapKey: "event_transfers_cost",
-      },
-    ],
-    []
-  );
-  const catData = catArr.map((item) => item.label);
-  const setSeries = useMemo(() => {
-    if (historyInfo) {
+  // console.log("🚀 ~ Points ~ hisData:", hisData);
+
+  const handleSearch = (idList: idsItem[]) => {
+    setIdList(idList);
+  };
+
+  const setGwpSeries = useMemo(() => {
+    if (idList.length > 0) {
       const seriesData: Record<string, any>[] = [];
-
-      catArr.forEach(({ mapKey, label }) => {
-        let markPoint;
-        const chipsUsed = chips?.map((item) => {
-          return {
-            value: item.name,
-            itemStyle: {
-              color: "red",
+      idList.forEach((idItem, idx) => {
+        const historyInfo: PointsItem[] = hisData && hisData[idx]?.current;
+        if (historyInfo) {
+          seriesData.push({
+            name: idItem.name,
+            type: "line",
+            emphasis: {
+              focus: "series",
             },
-            symbol: "triangle",
-            symbolSize: 40,
-            symbolOffset: [0, 30],
-            coord: [item.event - 1, 0],
-          };
-        });
-        if (mapKey === "points" && chipsUsed) {
-          markPoint = {
-            data: [
-              { type: "max", name: "Max" },
-              { type: "min", name: "Min" },
-              ...chipsUsed,
-            ],
-          };
+            markPoint: {
+              data: [
+                { type: "max", name: "Max" },
+                { type: "min", name: "Min" },
+              ],
+            },
+            data: historyInfo.map((it) => it.points),
+          });
         }
-        seriesData.push({
-          name: label,
-          type: "line",
-          emphasis: {
-            focus: "series",
-          },
-          markPoint,
-          data: historyInfo.map((it) => it[mapKey as keyof PointsItem]),
-        });
       });
-      // console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
       return seriesData;
     }
     return null;
-  }, [historyInfo, catArr, chips]);
+  }, [hisData, idList]);
+
+  const setTpSeries = useMemo(() => {
+    if (idList.length > 0) {
+      const seriesData: Record<string, any>[] = [];
+      idList.forEach((idItem, idx) => {
+        const historyInfo: PointsItem[] = hisData && hisData[idx]?.current;
+        if (historyInfo) {
+          seriesData.push({
+            name: idItem.name,
+            type: "line",
+            emphasis: {
+              focus: "series",
+            },
+            data: historyInfo.map((it) => it.total_points),
+          });
+        }
+      });
+      return seriesData;
+    }
+    return null;
+  }, [hisData, idList]);
+  const setRankSeries = useMemo(() => {
+    if (idList.length > 0) {
+      const seriesData: Record<string, any>[] = [];
+      idList.forEach((idItem, idx) => {
+        const historyInfo: PointsItem[] = hisData && hisData[idx]?.current;
+        if (historyInfo) {
+          seriesData.push({
+            name: idItem.name,
+            type: "line",
+            emphasis: {
+              focus: "series",
+            },
+            data: historyInfo.map((it) => it.overall_rank),
+          });
+        }
+      });
+      return seriesData;
+    }
+    return null;
+  }, [hisData, idList]);
 
   const setXAxis = useMemo(() => {
-    if (historyInfo) {
+    if (hisData && hisData[0]?.current) {
       const xData = [];
-      for (let a = 1; a <= historyInfo.length; a++) {
+      for (let a = 1; a <= hisData[0]?.current.length; a++) {
         xData.push(`GW${a}`);
       }
       return xData;
     }
     return [];
-  }, [historyInfo]);
+  }, [hisData]);
 
-  const option = {
-    title: {
-      text: "Points Chart",
-    },
-    tooltip: {
-      trigger: "axis",
-      axisPointer: {
-        type: "cross",
-        label: {
-          backgroundColor: "#6a7985",
+  const genOption = (
+    title: string,
+    dataMethod: Record<any, any>[] | null,
+    yInverse = false
+  ) => {
+    return {
+      title: {
+        text: title,
+      },
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "cross",
+          label: {
+            backgroundColor: "#6a7985",
+          },
         },
       },
-    },
-    legend: {
-      data: catData,
-      selected: {
-        "Total Points": false,
+      legend: {
+        data: idList,
       },
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+        },
       },
-    },
-    grid: {
-      // containLabel: true,
-      // height: "300",
-    },
-    xAxis: [
-      {
-        type: "category",
-        boundaryGap: false,
-        data: setXAxis,
-      },
-    ],
-    yAxis: [
-      {
-        type: "value",
-      },
-    ],
-    series: setSeries,
+      xAxis: [
+        {
+          type: "category",
+          boundaryGap: false,
+          data: setXAxis,
+        },
+      ],
+      yAxis: [
+        {
+          type: "value",
+          inverse: yInverse,
+        },
+      ],
+      series: dataMethod,
+    };
   };
+
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
-      <ComparisonHeader />
+      <ComparisonHeader onSearch={handleSearch} />
       <Typography variant="h6" gutterBottom>
-        Comparison Page can help to compare two FPL players points & rank by
-        GWs.
+        Comparison Page can help to compare FPL players points & rank by GWs.
       </Typography>
       <div className="w-full h-full">
         {isLoading ? (
@@ -153,12 +160,26 @@ export default function Points() {
             <CircularProgress color="inherit" />
           </Box>
         ) : (
-          <ReactEcharts
-            option={option}
-            style={{
-              height: "500px",
-            }}
-          />
+          <>
+            <ReactEcharts
+              option={genOption("GW Points Comparision Chart", setGwpSeries)}
+              style={{
+                height: "500px",
+              }}
+            />
+            <ReactEcharts
+              option={genOption("Total Points Comparision Chart", setTpSeries)}
+              style={{
+                height: "500px",
+              }}
+            />
+            <ReactEcharts
+              option={genOption("Rank Comparision Chart", setRankSeries, true)}
+              style={{
+                height: "500px",
+              }}
+            />
+          </>
         )}
       </div>
     </div>

@@ -59,6 +59,16 @@ export const fetcher = (url: string) => {
   }
 };
 
+export function multiFetcher(urls: string[]) {
+  return Promise.all(
+    urls.map((url) => {
+      return axios.get(url).then((res) => {
+        return res.data.data;
+      });
+    })
+  );
+}
+
 export const basicInfofetcher = (url: string) => {
   if (checkInDemo()) {
     return basicInfo;
