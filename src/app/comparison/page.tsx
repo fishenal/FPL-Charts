@@ -1,30 +1,38 @@
 "use client";
 import { useMemo } from "react";
-import { IFPLData, useFPLData } from "../hooks/useFPLData";
 import ReactEcharts from "echarts-for-react";
 import { HistoryRes, PointsItem } from "@/lib/fetch";
+import useSWR from "swr";
 import { useAppConfig } from "../hooks/useAppConfig";
-import useSWR, { SWRConfig } from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { UserInfoHeader } from "../components/userInfoHeader";
-
+import { ComparisonHeader } from "../components/comparisonHeader";
 export default function Points() {
   const { id } = useAppConfig();
   const { data, isLoading } = useSWR<HistoryRes>(
     () => (id ? `/api/fpl/history/${id}` : ""),
     fetcher
   );
+
   const historyInfo = data?.current;
+  const chips = data?.chips;
   const catArr = useMemo(
     () => [
       {
-        label: "OR Rank",
-        mapKey: "overall_rank",
+        label: "Total Points",
+        mapKey: "total_points",
       },
       {
-        label: "GW Rank",
-        mapKey: "rank",
+        label: "GW Points",
+        mapKey: "points",
+      },
+      {
+        label: "Bench Points",
+        mapKey: "points_on_bench",
+      },
+      {
+        label: "Trans. Cost",
+        mapKey: "event_transfers_cost",
       },
     ],
     []
@@ -35,25 +43,43 @@ export default function Points() {
       const seriesData: Record<string, any>[] = [];
 
       catArr.forEach(({ mapKey, label }) => {
+        let markPoint;
+        const chipsUsed = chips?.map((item) => {
+          return {
+            value: item.name,
+            itemStyle: {
+              color: "red",
+            },
+            symbol: "triangle",
+            symbolSize: 40,
+            symbolOffset: [0, 30],
+            coord: [item.event - 1, 0],
+          };
+        });
+        if (mapKey === "points" && chipsUsed) {
+          markPoint = {
+            data: [
+              { type: "max", name: "Max" },
+              { type: "min", name: "Min" },
+              ...chipsUsed,
+            ],
+          };
+        }
         seriesData.push({
           name: label,
           type: "line",
           emphasis: {
             focus: "series",
           },
-          markPoint: {
-            data: [
-              { type: "max", name: "Max" },
-              { type: "min", name: "Min" },
-            ],
-          },
+          markPoint,
           data: historyInfo.map((it) => it[mapKey as keyof PointsItem]),
         });
       });
+      // console.log("🚀 ~ setSeries ~ seriesData:", seriesData);
       return seriesData;
     }
     return null;
-  }, [historyInfo, catArr]);
+  }, [historyInfo, catArr, chips]);
 
   const setXAxis = useMemo(() => {
     if (historyInfo) {
@@ -65,9 +91,10 @@ export default function Points() {
     }
     return [];
   }, [historyInfo]);
+
   const option = {
     title: {
-      text: "Rank Chart",
+      text: "Points Chart",
     },
     tooltip: {
       trigger: "axis",
@@ -80,6 +107,9 @@ export default function Points() {
     },
     legend: {
       data: catData,
+      selected: {
+        "Total Points": false,
+      },
     },
     toolbox: {
       feature: {
@@ -100,16 +130,16 @@ export default function Points() {
     yAxis: [
       {
         type: "value",
-        inverse: true,
       },
     ],
     series: setSeries,
   };
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
-      <UserInfoHeader />
+      <ComparisonHeader />
       <Typography variant="h6" gutterBottom>
-        Your FPL Team Rank Line Chart
+        Comparison Page can help to compare two FPL players points & rank by
+        GWs.
       </Typography>
       <div className="w-full h-full">
         {isLoading ? (

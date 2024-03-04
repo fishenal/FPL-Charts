@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import { Alert, Button, Tooltip, Typography } from "@mui/material";
 import { GlobalLoading } from "./globalLoading";
 import { usePathname } from "next/navigation";
-export const Header = () => {
+export const ComparisonHeader = () => {
   const pathname = usePathname();
   const { id, setId } = useAppConfig();
   const [stId, setStId] = useState("");
@@ -138,7 +138,7 @@ export const Header = () => {
     return null;
   }
   return (
-    <div className="flex items-start flex-col gap-4 border-solid border-b border-neutral-100 py-5">
+    <div className="flex items-start flex-col gap-4 border-solid border-b border-neutral-100 py-5 w-full">
       {renderDataInfo()}
       {renderBasicInfo()}
       <div className="flex gap-2">
