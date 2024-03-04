@@ -9,7 +9,11 @@ import dayjs from "dayjs";
 import { Alert, Button, Tooltip, Typography } from "@mui/material";
 import { GlobalLoading } from "./globalLoading";
 import { usePathname } from "next/navigation";
+<<<<<<<< HEAD:src/app/components/comparisonHeader.tsx
 export const ComparisonHeader = () => {
+========
+export const UserInfoHeader = () => {
+>>>>>>>> 0783c7d2d117bbd3c2472b265bc8f5caabb78365:src/app/components/userInfoHeader.tsx
   const pathname = usePathname();
   const { id, setId } = useAppConfig();
   const [stId, setStId] = useState("");
