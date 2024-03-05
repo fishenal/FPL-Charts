@@ -12,9 +12,9 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "FPL-Charts",
+  title: "FPL-Charts: Analysis & Record your FPL game stats.",
   description:
-    "Web App for FPL players to visual analysis their player performance, player stats and play history. ",
+    "Web App for FPL players to visual analysis their player performance, player stats and play history. Comparison stats.",
 };
 
 export default function RootLayout({
