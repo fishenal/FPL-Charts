@@ -67,7 +67,7 @@ export const ComparisonHeader = ({
   return (
     <div className="flex items-start flex-col gap-4 border-solid border-b border-neutral-100 py-5 w-full">
       <div>Please Enter GameID than click Add button</div>
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row">
         {idList.map((item) => (
           <Chip
             label={item.name}

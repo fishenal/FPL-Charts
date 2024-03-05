@@ -178,9 +178,7 @@ export default function PlayerChoose() {
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
       <UserInfoHeader />
-      <Typography variant="h6" gutterBottom>
-        Analytics of Your FPL Picks Stats Table
-      </Typography>
+      <h2>Analytics of Your FPL Picks Stats Table</h2>
       <div className="w-full h-full">
         {loading1 || loading2 ? (
           <Box
