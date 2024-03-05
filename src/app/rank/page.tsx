@@ -99,7 +99,7 @@ export default function Points() {
     ],
     yAxis: [
       {
-        type: "value",
+        type: "log",
         inverse: true,
       },
     ],

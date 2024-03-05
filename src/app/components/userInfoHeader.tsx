@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import { Alert, Button, TextField, Tooltip, Typography } from "@mui/material";
 import { GlobalLoading } from "./globalLoading";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 export const UserInfoHeader = () => {
   const pathname = usePathname();
   const { id, setId } = useAppConfig();
@@ -106,18 +107,38 @@ export const UserInfoHeader = () => {
     } else {
       return (
         <div className="font-semibold text-base">
-          No Available Data, Please Search in Below Input.
-          <Button
-            onClick={() => {
-              window.location.href = "/points/?demo=1";
-            }}
-            variant="outlined"
-            sx={{
-              marginLeft: 3,
-            }}
-          >
-            See Demo Mode
-          </Button>
+          <div>
+            <h2>
+              Where is your GameID from{" "}
+              <a
+                href="https://fantasy.premierleague.com/"
+                target="_blank"
+                className="underline"
+              >
+                fantasy.premierleague.com
+              </a>
+              ?
+            </h2>
+            <div className="py-3 w-1/2">
+              <Image
+                src="/indicate.png"
+                width={996}
+                height={98}
+                alt="your GameID from fantasy.premierleague.com url"
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <h2>No Available Data, Please Search in Below Input.</h2>
+            <Button
+              onClick={() => {
+                window.location.href = "/points/?demo=1";
+              }}
+              variant="outlined"
+            >
+              See Demo Mode
+            </Button>
+          </div>
         </div>
       );
     }
