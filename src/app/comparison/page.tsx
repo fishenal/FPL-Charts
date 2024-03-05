@@ -55,7 +55,7 @@ export default function Points() {
         if (historyInfo) {
           seriesData.push({
             name: idItem.name,
-            type: "line",
+            type: "bar",
             emphasis: {
               focus: "series",
             },
@@ -102,7 +102,7 @@ export default function Points() {
   const genOption = (
     title: string,
     dataMethod: Record<any, any>[] | null,
-    yInverse = false
+    rankCharts = false
   ) => {
     return {
       title: {
@@ -134,8 +134,8 @@ export default function Points() {
       ],
       yAxis: [
         {
-          type: "value",
-          inverse: yInverse,
+          type: rankCharts ? "log" : "value",
+          inverse: rankCharts,
         },
       ],
       series: dataMethod,
