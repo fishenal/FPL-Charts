@@ -4,8 +4,7 @@ import "./globals.css";
 import { Nav } from "./components/nav";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Image from "next/image";
-import { Grid } from "@mui/material";
+
 import CssBaseline from "@mui/material/CssBaseline";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -26,54 +25,28 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <CssBaseline />
-        <Grid
-          container
-          sx={{
-            height: "100vh",
-          }}
-        >
-          <Grid item xs={4} sm={3} md={2}>
-            <nav className="bg-neutral-100 shadow-inner h-full">
-              <header className="p-2 pt-4">
-                <h1 className="flex text-2xl p-2 gap-2">
-                  <Image
-                    src="/icon.png"
-                    width="30"
-                    height="25"
-                    alt="FPL Charts Icon"
-                  />
-                  FPL Charts
-                </h1>
-              </header>
-              <Nav />
-            </nav>
-          </Grid>
-          <Grid
-            item
-            xs={8}
-            sm={9}
-            md={10}
-            sx={{
-              paddingX: 5,
-            }}
-          >
+        <div className="flex flex-col sm:flex-row text-sm">
+          <div>
+            <Nav />
+          </div>
+          <div className="flex-1 px-4">
             <div className="flex">{children}</div>
-            <ToastContainer
-              position="bottom-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </Grid>
-        </Grid>
+          </div>
+        </div>
         <Analytics />
         <SpeedInsights />
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </body>
     </html>
   );

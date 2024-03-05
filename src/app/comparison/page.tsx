@@ -145,9 +145,9 @@ export default function Points() {
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
       <ComparisonHeader onSearch={handleSearch} />
-      <Typography variant="h6" gutterBottom>
+      <h2>
         Comparison Page can help to compare FPL players points & rank by GWs.
-      </Typography>
+      </h2>
       <div className="w-full h-full">
         {isLoading ? (
           <Box

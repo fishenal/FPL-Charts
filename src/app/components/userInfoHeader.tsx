@@ -62,7 +62,7 @@ export const UserInfoHeader = () => {
             </Alert>
           )}
 
-          <Typography variant="h6" gutterBottom>
+          <div className="font-semibold text-sm flex sm:text-base">
             Current Data from User {userInfoData.id}
             <Tooltip
               title={
@@ -100,12 +100,12 @@ export const UserInfoHeader = () => {
             >
               Update My Data
             </Button>
-          </Typography>
+          </div>
         </div>
       );
     } else {
       return (
-        <Typography variant="h6" gutterBottom>
+        <div className="font-semibold text-base">
           No Available Data, Please Search in Below Input.
           <Button
             onClick={() => {
@@ -118,7 +118,7 @@ export const UserInfoHeader = () => {
           >
             See Demo Mode
           </Button>
-        </Typography>
+        </div>
       );
     }
   };

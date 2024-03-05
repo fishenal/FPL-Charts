@@ -170,9 +170,7 @@ export default function Points() {
   return (
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
       <UserInfoHeader />
-      <Typography variant="h6" gutterBottom>
-        Your FPL Team Points Line Chart
-      </Typography>
+      <h2>Your FPL Team Points Line Chart</h2>
       <div className="w-full h-full">
         {isLoading ? (
           <Box
