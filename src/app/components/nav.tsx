@@ -73,7 +73,7 @@ export const Nav = () => {
     );
   };
   return (
-    <nav className="bg-neutral-100 shadow-inner h-full min-w-[200px]">
+    <nav className="bg-neutral-100 shadow-inner h-full min-w-[200px] h-screen">
       <header
         className="p-2 pt-4"
         onClick={() => {
