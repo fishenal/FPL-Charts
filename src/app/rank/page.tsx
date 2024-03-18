@@ -58,8 +58,8 @@ export default function Points() {
   const setXAxis = useMemo(() => {
     if (historyInfo) {
       const xData = [];
-      for (let a = 1; a <= historyInfo.length; a++) {
-        xData.push(`GW${a}`);
+      for (let a = 0; a < historyInfo.length; a++) {
+        xData.push(`GW${historyInfo[a]?.event}`);
       }
       return xData;
     }

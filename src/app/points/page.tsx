@@ -28,6 +28,10 @@ export default function Points() {
         mapKey: "points",
       },
       {
+        label: "Net. Points(-cost p.)",
+        mapKey: "netPoints",
+      },
+      {
         label: "Bench Points",
         mapKey: "points_on_bench",
       },
@@ -83,6 +87,9 @@ export default function Points() {
           if (mapKey === "gw_avg") {
             return events?.map((it) => it.average_entry_score);
           }
+          if (mapKey === "netPoints") {
+            return historyInfo.map((it) => it["points"] - it["event_transfers_cost"]);
+          }
           return historyInfo.map((it) => it[mapKey as keyof PointsItem]);
         };
         let lineStyle = {};
@@ -117,8 +124,8 @@ export default function Points() {
   const setXAxis = useMemo(() => {
     if (historyInfo) {
       const xData = [];
-      for (let a = 1; a <= historyInfo.length; a++) {
-        xData.push(`GW${a}`);
+      for (let a = 0; a < historyInfo.length; a++) {
+        xData.push(`GW${historyInfo[a]?.event}`);
       }
       return xData;
     }

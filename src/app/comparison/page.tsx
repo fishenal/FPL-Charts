@@ -10,7 +10,7 @@ export default function Points() {
   const [idList, setIdList] = useState<idsItem[]>([]);
   const { data: hisData, isLoading } = useSWR(
     idList.length > 0 &&
-      idList.map((idItem) => `/api/fpl/history/${idItem.id}`),
+    idList.map((idItem) => `/api/fpl/history/${idItem.id}`),
     multiFetcher
   );
 
@@ -89,11 +89,22 @@ export default function Points() {
   }, [hisData, idList]);
 
   const setXAxis = useMemo(() => {
-    if (hisData && hisData[0]?.current) {
+    if (hisData && hisData.length > 0) {
+      // TODO: when comparision two player with diff gw start
+      let longestData: PointsItem[] = [];
+      hisData.forEach(item => {
+        if (item.current.length > longestData.length) {
+          longestData = [...item.current];
+        }
+      })
+
       const xData = [];
-      for (let a = 1; a <= hisData[0]?.current.length; a++) {
-        xData.push(`GW${a}`);
+      if (longestData.length > 0) {
+        for (let a = 0; a < longestData.length; a++) {
+          xData.push(`GW${longestData[a]?.event}`);
+        }
       }
+
       return xData;
     }
     return [];
