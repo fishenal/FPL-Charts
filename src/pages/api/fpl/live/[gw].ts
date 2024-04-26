@@ -1,3 +1,4 @@
+// import { fetchLive } from "@/lib/fetch";
 import type { NextApiRequest, NextApiResponse } from "next";
 export interface ResponseData {
   message?: string;
@@ -19,6 +20,10 @@ export default async function handler(
         const data: Record<string, any> = {};
         for (let i = 1; i <= Number(gw); i++) {
           try {
+            // too slow to get all 38 gw live data
+            // used only in picks page
+            // const res = await fetchLive(i);
+            // const elements = res?.elements || [];
             const { elements } = await import(`@/lib/live/${i}.json`);
             const liveData: SimpleLiveData = {};
             elements.forEach((item: any) => {
