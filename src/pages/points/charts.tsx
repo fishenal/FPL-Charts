@@ -7,19 +7,18 @@ import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { Events } from "@/pages/api/fpl/events";
 import { UserInfoHeader } from "../../components/userInfoHeader";
-import { RootLayout } from "../../components/layout";
-import PointsCharts from "./charts";
+import historyDemoData from "../../lib/demo/history";
 
-export default function Points({ demo = false }: { demo?: boolean }) {
+export default function PointsCharts({ demo = false }: { demo?: boolean }) {
   const { id } = useAppConfig();
   const { data, isLoading } = useSWR<HistoryRes>(
-    () => (id ? `/api/fpl/history/${id}` : ""),
+    () => (id && !demo ? `/api/fpl/history/${id}` : ""),
     fetcher
   );
-  console.log("🚀 ~ Points ~ data:", data);
+
   const { data: events } = useSWR<Events>("/api/fpl/events", fetcher);
-  const historyInfo = data?.current;
-  const chips = data?.chips;
+  const historyInfo = demo ? historyDemoData.current : data?.current;
+  const chips = demo ? historyDemoData.chips : data?.chips;
   const catArr = useMemo(
     () => [
       {
@@ -138,9 +137,9 @@ export default function Points({ demo = false }: { demo?: boolean }) {
   }, [historyInfo]);
 
   const option = {
-    title: {
-      text: "Points Chart",
-    },
+    // title: {
+    //   text: "Points Chart",
+    // },
     tooltip: {
       trigger: "axis",
       axisPointer: {
@@ -179,15 +178,26 @@ export default function Points({ demo = false }: { demo?: boolean }) {
     ],
     series: setSeries,
   };
-  return (
-    <RootLayout>
-      <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
-        {/* <UserInfoHeader />
-        <h2>Your FPL Team Points Line Chart</h2> */}
-        <div className="w-full h-full">
-          <PointsCharts />
-        </div>
-      </div>
-    </RootLayout>
+  return isLoading ? (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        marginTop: 20,
+      }}
+    >
+      <CircularProgress color="inherit" />
+    </Box>
+  ) : (
+    <ReactEcharts
+      option={option}
+      style={
+        demo
+          ? {}
+          : {
+              height: "500px",
+            }
+      }
+    />
   );
 }

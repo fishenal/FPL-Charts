@@ -12,13 +12,13 @@ const inter = Inter({ subsets: ["latin"] });
 export const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="bg-neutral-100">
-      <div className="max-w-screen-lg mx-auto">
+      <div>
         <CssBaseline />
         <Nav />
-        <main>{children}</main>
+        <main className="my-2">{children}</main>
         <Footer />
         <Analytics />
-        <ToastContainer
+        {/* <ToastContainer
           position="bottom-right"
           autoClose={5000}
           hideProgressBar={false}
@@ -29,7 +29,7 @@ export const RootLayout = ({ children }: { children: React.ReactNode }) => {
           draggable
           pauseOnHover
           theme="light"
-        />
+        /> */}
       </div>
     </div>
     // <html lang="en">

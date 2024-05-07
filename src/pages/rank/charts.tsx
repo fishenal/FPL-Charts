@@ -1,20 +1,19 @@
-"use client";
 import { useMemo } from "react";
+import ReactEcharts from "echarts-for-react";
 import { HistoryRes, PointsItem } from "@/lib/fetch";
 import { useAppConfig } from "../../hooks/useAppConfig";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { UserInfoHeader } from "../../components/userInfoHeader";
-import { RootLayout } from "../../components/layout";
-import RankCharts from "./charts";
+import { Box, CircularProgress } from "@mui/material";
+import historyDemoData from "../../lib/demo/history";
 
-export default function Ranks() {
+export default function RankCharts({ demo = false }: { demo?: boolean }) {
   const { id } = useAppConfig();
   const { data, isLoading } = useSWR<HistoryRes>(
-    () => (id ? `/api/fpl/history/${id}` : ""),
+    () => (id && !demo ? `/api/fpl/history/${id}` : ""),
     fetcher
   );
-  const historyInfo = data?.current;
+  const historyInfo = demo ? historyDemoData.current : data?.current;
   const catArr = useMemo(
     () => [
       {
@@ -65,9 +64,9 @@ export default function Ranks() {
     return [];
   }, [historyInfo]);
   const option = {
-    title: {
-      text: "Rank Chart",
-    },
+    // title: {
+    //   text: "Rank Chart",
+    // },
     tooltip: {
       trigger: "axis",
       axisPointer: {
@@ -104,14 +103,26 @@ export default function Ranks() {
     ],
     series: setSeries,
   };
-  return (
-    <RootLayout>
-      <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
-        <UserInfoHeader />
-        <div className="w-full h-full">
-          <RankCharts />
-        </div>
-      </div>
-    </RootLayout>
+  return isLoading ? (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        marginTop: 20,
+      }}
+    >
+      <CircularProgress color="inherit" />
+    </Box>
+  ) : (
+    <ReactEcharts
+      option={option}
+      style={
+        demo
+          ? {}
+          : {
+              height: "500px",
+            }
+      }
+    />
   );
 }

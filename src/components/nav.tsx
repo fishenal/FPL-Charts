@@ -101,7 +101,7 @@ export const Nav = () => {
   };
   const renderFullNav = () => {
     return (
-      <header className="flex flex-row py-4 justify-between">
+      <header className="flex flex-row py-4 justify-between max-w-screen-lg mx-auto">
         <div className="flex gap-2 items-center">
           <Image src="/icon.png" width="50" height="60" alt="FPL Charts Icon" />
           <h1 className="text-lg font-bold">FPL Charts</h1>
