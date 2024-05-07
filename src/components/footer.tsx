@@ -7,10 +7,15 @@ export const Footer = () => {
     {
       label: "Premier League Fantasy",
       path: "https://fantasy.premierleague.com/",
+      target: true,
     },
     {
       label: "About",
       path: "/about",
+    },
+    {
+      label: "Help",
+      path: "/#help",
     },
     {
       label: "Privacy Policy",
@@ -27,9 +32,9 @@ export const Footer = () => {
 
         <div className="flex flex-col items-end">
           <ul className="flex pl-8 gap-4">
-            {navs.map(({ label, path }, idx) => (
+            {navs.map(({ label, path, target }, idx) => (
               <li className="hover:underline hover:text-amber-800" key={idx}>
-                <Link href={path} target="_blank">
+                <Link href={path} target={target ? "_blank" : "_self"}>
                   {label}.
                 </Link>
               </li>

@@ -4,7 +4,7 @@ import { RootLayout } from "../../components/layout";
 
 export default function About() {
   return (
-    <RootLayout>
+    <RootLayout innerFix>
       <div className="flex flex-col gap-2 py-8 w-full h-full">
         <Typography variant="h4" gutterBottom>
           About

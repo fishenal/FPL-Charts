@@ -177,10 +177,10 @@ export default function PlayerChoose() {
   }, [pickData, liveData, elements]);
 
   return (
-    <RootLayout>
+    <RootLayout innerFix>
       <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
-        <UserInfoHeader />
-        <h2>Analytics of Your FPL Picks Stats Table</h2>
+        {/* <UserInfoHeader /> */}
+        {/* <h2>Analytics of Your FPL Picks Stats Table</h2> */}
         <div className="w-full h-full">
           {loading1 || loading2 ? (
             <Box

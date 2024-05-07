@@ -114,10 +114,9 @@ export default function Points() {
     series: setSeries,
   };
   return (
-    <RootLayout>
+    <RootLayout innerFix>
       <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
-        <UserInfoHeader />
-        <h2>Your FPL Team Rank Bar Chart</h2>
+        {/* <UserInfoHeader /> */}
         <div className="w-full h-full">
           {isLoading ? (
             <Box

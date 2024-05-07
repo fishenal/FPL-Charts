@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export const HowTo = () => {
   return (
-    <div className="border-t py-5 max-w-screen-lg mx-auto">
+    <div className="border-t py-5 max-w-screen-lg mx-auto" id="help">
       <h1 className="flex text-lg font-bold">How to Use</h1>
       <div className="flex justify-between w-full gap-2">
         <div className="w-1/3 bg-[#046035] p-4 text-white">

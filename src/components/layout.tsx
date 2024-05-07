@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Nav } from "./nav";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,13 +9,25 @@ import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "./footer";
 const inter = Inter({ subsets: ["latin"] });
 
-export const RootLayout = ({ children }: { children: React.ReactNode }) => {
+export const RootLayout = ({
+  children,
+  innerFix = false,
+}: {
+  children: React.ReactNode;
+  innerFix?: boolean;
+}) => {
+  const renderChildren = () => {
+    if (innerFix) {
+      return <div className="max-w-screen-lg mx-auto">{children}</div>;
+    }
+    return children;
+  };
   return (
     <div className="bg-neutral-100">
       <div>
         <CssBaseline />
         <Nav />
-        <main className="my-2">{children}</main>
+        <main className="my-2">{renderChildren()}</main>
         <Footer />
         <Analytics />
         {/* <ToastContainer
