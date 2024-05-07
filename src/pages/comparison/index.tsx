@@ -6,11 +6,12 @@ import useSWR from "swr";
 import { multiFetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { ComparisonHeader, idsItem } from "../components/comparisonHeader";
+import { RootLayout } from "../components/layout";
 export default function Points() {
   const [idList, setIdList] = useState<idsItem[]>([]);
   const { data: hisData, isLoading } = useSWR(
     idList.length > 0 &&
-    idList.map((idItem) => `/api/fpl/history/${idItem.id}`),
+      idList.map((idItem) => `/api/fpl/history/${idItem.id}`),
     multiFetcher
   );
 
@@ -92,11 +93,11 @@ export default function Points() {
     if (hisData && hisData.length > 0) {
       // TODO: when comparision two player with diff gw start
       let longestData: PointsItem[] = [];
-      hisData.forEach(item => {
+      hisData.forEach((item) => {
         if (item.current.length > longestData.length) {
           longestData = [...item.current];
         }
-      })
+      });
 
       const xData = [];
       if (longestData.length > 0) {
@@ -154,45 +155,54 @@ export default function Points() {
   };
 
   return (
-    <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
-      <ComparisonHeader onSearch={handleSearch} />
-      <h2>
-        Comparison Page can help to compare FPL players points & rank by GWs.
-      </h2>
-      <div className="w-full h-full">
-        {isLoading ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: 20,
-            }}
-          >
-            <CircularProgress color="inherit" />
-          </Box>
-        ) : (
-          <>
-            <ReactEcharts
-              option={genOption("GW Points Comparision Chart", setGwpSeries)}
-              style={{
-                height: "500px",
+    <RootLayout>
+      <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
+        <ComparisonHeader onSearch={handleSearch} />
+        <h2>
+          Comparison Page can help to compare FPL players points & rank by GWs.
+        </h2>
+        <div className="w-full h-full">
+          {isLoading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: 20,
               }}
-            />
-            <ReactEcharts
-              option={genOption("Total Points Comparision Chart", setTpSeries)}
-              style={{
-                height: "500px",
-              }}
-            />
-            <ReactEcharts
-              option={genOption("Rank Comparision Chart", setRankSeries, true)}
-              style={{
-                height: "500px",
-              }}
-            />
-          </>
-        )}
+            >
+              <CircularProgress color="inherit" />
+            </Box>
+          ) : (
+            <>
+              <ReactEcharts
+                option={genOption("GW Points Comparision Chart", setGwpSeries)}
+                style={{
+                  height: "500px",
+                }}
+              />
+              <ReactEcharts
+                option={genOption(
+                  "Total Points Comparision Chart",
+                  setTpSeries
+                )}
+                style={{
+                  height: "500px",
+                }}
+              />
+              <ReactEcharts
+                option={genOption(
+                  "Rank Comparision Chart",
+                  setRankSeries,
+                  true
+                )}
+                style={{
+                  height: "500px",
+                }}
+              />
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </RootLayout>
   );
 }

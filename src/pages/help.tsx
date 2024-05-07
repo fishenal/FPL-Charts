@@ -1,10 +1,6 @@
 import { Typography } from "@mui/material";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function HelpPage({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-2 py-8 w-full h-full">
       <Typography variant="h4" gutterBottom>

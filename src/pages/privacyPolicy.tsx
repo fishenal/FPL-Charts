@@ -5,11 +5,7 @@ export const metadata: Metadata = {
   description: "How Many Times App Privacy Policy",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function PPPage({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <h1>Privacy Policy</h1>

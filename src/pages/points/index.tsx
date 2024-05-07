@@ -9,6 +9,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { Events } from "@/pages/api/fpl/events";
 import { UserInfoHeader } from "../components/userInfoHeader";
 import { RootLayout } from "../components/layout";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 export default function Points() {
   const { id } = useAppConfig();
   const { data, isLoading } = useSWR<HistoryRes>(
@@ -89,7 +90,9 @@ export default function Points() {
             return events?.map((it) => it.average_entry_score);
           }
           if (mapKey === "netPoints") {
-            return historyInfo.map((it) => it["points"] - it["event_transfers_cost"]);
+            return historyInfo.map(
+              (it) => it["points"] - it["event_transfers_cost"]
+            );
           }
           return historyInfo.map((it) => it[mapKey as keyof PointsItem]);
         };
@@ -177,30 +180,30 @@ export default function Points() {
   };
   return (
     <RootLayout>
-    <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
-      <UserInfoHeader />
-      <h2>Your FPL Team Points Line Chart</h2>
-      <div className="w-full h-full">
-        {isLoading ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: 20,
-            }}
-          >
-            <CircularProgress color="inherit" />
-          </Box>
-        ) : (
-          <ReactEcharts
-            option={option}
-            style={{
-              height: "500px",
-            }}
-          />
-        )}
+      <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
+        <UserInfoHeader />
+        <h2>Your FPL Team Points Line Chart</h2>
+        <div className="w-full h-full">
+          {isLoading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: 20,
+              }}
+            >
+              <CircularProgress color="inherit" />
+            </Box>
+          ) : (
+            <ReactEcharts
+              option={option}
+              style={{
+                height: "500px",
+              }}
+            />
+          )}
+        </div>
       </div>
-    </div>
     </RootLayout>
   );
 }

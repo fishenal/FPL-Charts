@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Collapse, IconButton, IconButtonProps } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { isMobile } from "react-device-detect";
+import { render } from "react-dom";
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -29,6 +30,10 @@ export const Nav = () => {
   const demo = searchParams?.get("demo");
   const navs = [
     {
+      label: "Home",
+      path: "/",
+    },
+    {
       label: "Points",
       path: "/points",
     },
@@ -45,55 +50,82 @@ export const Nav = () => {
       path: "/value",
     },
     {
-      label: "Your Player Stats",
+      label: "Table",
       path: "/picks",
     },
-    {
-      label: "About",
-      path: "/about",
-    },
+    // {
+    //   label: "About",
+    //   path: "/about",
+    // },
   ];
-  const renderNav = () => {
+  const renderMobileNav = () => {
     return (
-      <ul className=" w-full mt-5 pb-5">
-        {navs.map(({ label, path }, idx) => (
-          <li className="mx-2" key={idx}>
-            <Link
-              href={path + (demo ? "?demo=1" : "")}
-              className={`py-1 px-2 mt-2 hover:bg-amber-200 w-full block rounded-md ${
-                pathname === path ? "bg-amber-200" : ""
-              }`}
-            >
-              {label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    );
-  };
-  return (
-    <nav className="">
-      <header
-        className="p-2 pt-4"
-        onClick={() => {
-          if (isMobile) {
+      <nav>
+        <header
+          className="p-2 pt-4"
+          onClick={() => {
             setExpandMenu(!expandMenu);
-          }
-        }}
-      >
-        <h1 className="flex text-lg p-2 gap-2">
-          <Image src="/icon.png" width="30" height="25" alt="FPL Charts Icon" />
-          FPL Charts
-          {isMobile && (
+          }}
+        >
+          <h1 className="flex text-lg p-2 gap-2">
+            <Image
+              src="/icon.png"
+              width="30"
+              height="25"
+              alt="FPL Charts Icon"
+            />
+            FPL Charts
             <ExpandMore expand={expandMenu}>
               <ExpandMoreIcon />
             </ExpandMore>
-          )}
-        </h1>
+          </h1>
+        </header>
+
+        <Collapse in={expandMenu || !isMobile} timeout="auto" unmountOnExit>
+          <ul className="w-full mt-5 pb-5">
+            {navs.map(({ label, path }, idx) => (
+              <li className="mx-2" key={idx}>
+                <Link
+                  href={path + (demo ? "?demo=1" : "")}
+                  className={`py-1 px-2 mt-2 hover:bg-amber-200 w-full block rounded-md ${
+                    pathname === path ? "bg-amber-200" : ""
+                  }`}
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Collapse>
+      </nav>
+    );
+  };
+  const renderFullNav = () => {
+    return (
+      <header className="flex flex-row py-4 justify-between">
+        <div className="flex gap-2 items-center">
+          <Image src="/icon.png" width="50" height="60" alt="FPL Charts Icon" />
+          <h1 className="text-lg font-bold">FPL Charts</h1>
+        </div>
+        <nav className="flex flex-row items-center gap-2">
+          {navs.map(({ label, path }, idx) => (
+            <div className="mx-2" key={idx}>
+              <Link
+                href={path + (demo ? "?demo=1" : "")}
+                className={`py-1 px-2 mt-2 hover:bg-amber-200 block rounded-md ${
+                  pathname === path ? "bg-amber-200" : ""
+                }`}
+              >
+                {label}
+              </Link>
+            </div>
+          ))}
+        </nav>
       </header>
-      <Collapse in={expandMenu || !isMobile} timeout="auto" unmountOnExit>
-        {renderNav()}
-      </Collapse>
-    </nav>
-  );
+    );
+  };
+  if (isMobile) {
+    return renderMobileNav();
+  }
+  return renderFullNav();
 };

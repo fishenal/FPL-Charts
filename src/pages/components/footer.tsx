@@ -7,19 +7,6 @@ import Image from "next/image";
 import { Collapse, IconButton, IconButtonProps } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { isMobile } from "react-device-detect";
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
-}
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
 export const Footer = () => {
   const pathname = usePathname();
@@ -29,71 +16,38 @@ export const Footer = () => {
   const demo = searchParams?.get("demo");
   const navs = [
     {
-      label: "Points",
-      path: "/points",
-    },
-    {
-      label: "Rank",
-      path: "/rank",
-    },
-    {
-      label: "Comparison",
-      path: "/comparison",
-    },
-    {
-      label: "Value",
-      path: "/value",
-    },
-    {
-      label: "Your Player Stats",
-      path: "/picks",
+      label: "Premier League Fantasy",
+      path: "https://fantasy.premierleague.com/",
     },
     {
       label: "About",
       path: "/about",
     },
+    {
+      label: "Privacy Policy",
+      path: "/privacyPolicySite",
+    },
   ];
-  const renderNav = () => {
-    return (
-      <ul className="text-sky-800 w-full mt-5 pb-5">
-        {navs.map(({ label, path }, idx) => (
-          <li className="mx-2" key={idx}>
-            <Link
-              href={path + (demo ? "?demo=1" : "")}
-              className={`py-1 px-2 mt-2 hover:bg-amber-200 w-full block rounded-md ${
-                pathname === path ? "bg-amber-200" : ""
-              }`}
-            >
-              {label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    );
-  };
+
   return (
-    <nav className="bg-neutral-100 shadow-inner min-w-[200px] h-screen">
-      <header
-        className="p-2 pt-4"
-        onClick={() => {
-          if (isMobile) {
-            setExpandMenu(!expandMenu);
-          }
-        }}
-      >
+    <footer className="border-t py-5 flex items-center justify-between">
+      <div>
         <h1 className="flex text-lg p-2 gap-2">
-          <Image src="/icon.png" width="30" height="25" alt="FPL Charts Icon" />
-          FPL Charts
-          {isMobile && (
-            <ExpandMore expand={expandMenu}>
-              <ExpandMoreIcon />
-            </ExpandMore>
-          )}
+          <Image src="/icon.png" width="50" height="60" alt="FPL Charts Icon" />
         </h1>
-      </header>
-      <Collapse in={expandMenu || !isMobile} timeout="auto" unmountOnExit>
-        {renderNav()}
-      </Collapse>
-    </nav>
+      </div>
+      <div className="flex flex-col items-end">
+        <ul className="flex pl-8 gap-4">
+          {navs.map(({ label, path }, idx) => (
+            <li className="hover:underline hover:text-amber-800" key={idx}>
+              <Link href={path} target="_blank">
+                {label}.
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="flex pl-8 gap-4">fishenal@2024</div>
+      </div>
+    </footer>
   );
 };

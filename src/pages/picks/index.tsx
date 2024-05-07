@@ -9,6 +9,7 @@ import { SimpleLiveData } from "@/pages/api/fpl/live/[gw]";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { UserInfoHeader } from "../components/userInfoHeader";
+import { RootLayout } from "../components/layout";
 
 interface SolvedPicksItem {
   isCap: boolean;
@@ -176,34 +177,36 @@ export default function PlayerChoose() {
   }, [pickData, liveData, elements]);
 
   return (
-    <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
-      <UserInfoHeader />
-      <h2>Analytics of Your FPL Picks Stats Table</h2>
-      <div className="w-full h-full">
-        {loading1 || loading2 ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: 20,
-            }}
-          >
-            <CircularProgress color="inherit" />
-          </Box>
-        ) : (
-          playerStats && (
-            <DataGrid
-              rows={playerStats}
-              columns={columns}
-              disableRowSelectionOnClick
-              disableColumnMenu
-              hideFooter
-              slots={{ toolbar: GridToolbar }}
-              getRowId={(row) => row.element}
-            />
-          )
-        )}
+    <RootLayout>
+      <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
+        <UserInfoHeader />
+        <h2>Analytics of Your FPL Picks Stats Table</h2>
+        <div className="w-full h-full">
+          {loading1 || loading2 ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: 20,
+              }}
+            >
+              <CircularProgress color="inherit" />
+            </Box>
+          ) : (
+            playerStats && (
+              <DataGrid
+                rows={playerStats}
+                columns={columns}
+                disableRowSelectionOnClick
+                disableColumnMenu
+                hideFooter
+                slots={{ toolbar: GridToolbar }}
+                getRowId={(row) => row.element}
+              />
+            )
+          )}
+        </div>
       </div>
-    </div>
+    </RootLayout>
   );
 }

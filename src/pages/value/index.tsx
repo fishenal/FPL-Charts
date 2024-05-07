@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { UserInfoHeader } from "../components/userInfoHeader";
+import { RootLayout } from "../components/layout";
 
 export default function Points() {
   const { id } = useAppConfig();
@@ -113,29 +114,31 @@ export default function Points() {
     series: setSeries,
   };
   return (
-    <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
-      <UserInfoHeader />
-      <h2>Your FPL Team Rank Bar Chart</h2>
-      <div className="w-full h-full">
-        {isLoading ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: 20,
-            }}
-          >
-            <CircularProgress color="inherit" />
-          </Box>
-        ) : (
-          <ReactEcharts
-            option={option}
-            style={{
-              height: "500px",
-            }}
-          />
-        )}
+    <RootLayout>
+      <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
+        <UserInfoHeader />
+        <h2>Your FPL Team Rank Bar Chart</h2>
+        <div className="w-full h-full">
+          {isLoading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: 20,
+              }}
+            >
+              <CircularProgress color="inherit" />
+            </Box>
+          ) : (
+            <ReactEcharts
+              option={option}
+              style={{
+                height: "500px",
+              }}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </RootLayout>
   );
 }
