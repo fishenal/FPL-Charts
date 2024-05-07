@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect } from "react";
 import { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";

@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect } from "react";
 import { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";
@@ -65,7 +64,7 @@ export const UserInfoHeader = () => {
 
           <div className="font-semibold text-sm flex sm:text-base">
             Current Data from User {userInfoData.id}
-            <Tooltip
+            {/* <Tooltip
               title={
                 <div className="p-3 space-y-2">
                   <p>
@@ -91,7 +90,7 @@ export const UserInfoHeader = () => {
                   ></path>
                 </svg>
               </span>
-            </Tooltip>
+            </Tooltip> */}
             <Button
               onClick={updateId}
               variant="outlined"

@@ -8,6 +8,7 @@ import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { Events } from "@/pages/api/fpl/events";
 import { UserInfoHeader } from "../components/userInfoHeader";
+import { RootLayout } from "../components/layout";
 export default function Points() {
   const { id } = useAppConfig();
   const { data, isLoading } = useSWR<HistoryRes>(
@@ -175,6 +176,7 @@ export default function Points() {
     series: setSeries,
   };
   return (
+    <RootLayout>
     <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
       <UserInfoHeader />
       <h2>Your FPL Team Points Line Chart</h2>
@@ -199,5 +201,6 @@ export default function Points() {
         )}
       </div>
     </div>
+    </RootLayout>
   );
 }

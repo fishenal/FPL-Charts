@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import Link from "next/link";
 import { styled } from "@mui/material/styles";
@@ -22,7 +21,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-export const Nav = () => {
+export const Footer = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [expandMenu, setExpandMenu] = useState(false);
