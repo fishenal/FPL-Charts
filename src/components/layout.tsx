@@ -7,14 +7,17 @@ import "react-toastify/dist/ReactToastify.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "./footer";
+import { UserInfoBanner } from "./UserInfoBanner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const RootLayout = ({
   children,
   innerFix = false,
+  withoutUserInfoBanner = false,
 }: {
   children: React.ReactNode;
   innerFix?: boolean;
+  withoutUserInfoBanner?: boolean;
 }) => {
   const renderChildren = () => {
     if (innerFix) {
@@ -27,7 +30,8 @@ export const RootLayout = ({
       <div>
         <CssBaseline />
         <Nav />
-        <main className="my-2">{renderChildren()}</main>
+        {!withoutUserInfoBanner && <UserInfoBanner />}
+        <main>{renderChildren()}</main>
         <Footer />
         <Analytics />
         {/* <ToastContainer

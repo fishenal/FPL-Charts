@@ -6,7 +6,7 @@ import { useAppConfig } from "../../hooks/useAppConfig";
 import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { Events } from "@/pages/api/fpl/events";
-import { UserInfoHeader } from "../../components/userInfoHeader";
+import { UserInfoHeader } from "../../components/UserInfoBanner";
 import historyDemoData from "../../lib/demo/history";
 
 export default function PointsCharts({ demo = false }: { demo?: boolean }) {

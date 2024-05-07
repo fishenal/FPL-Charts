@@ -8,7 +8,7 @@ import { PickDataItem } from "@/pages/api/fpl/picks/[gid]";
 import { SimpleLiveData } from "@/pages/api/fpl/live/[gw]";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { UserInfoHeader } from "../../components/userInfoHeader";
+import { UserInfoHeader } from "../../components/UserInfoBanner";
 import { RootLayout } from "../../components/layout";
 
 interface SolvedPicksItem {

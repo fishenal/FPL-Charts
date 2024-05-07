@@ -1,4 +1,4 @@
-import { UserInfoHeader } from "../../components/userInfoHeader";
+import { UserInfoHeader } from "../../components/UserInfoBanner";
 import { RootLayout } from "../../components/layout";
 import RankCharts from "./charts";
 

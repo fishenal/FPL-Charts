@@ -1,9 +1,8 @@
-import { RootLayout } from "@/components/layout";
 import { Typography } from "@mui/material";
 
-export default function HelpPage({ children }: { children: React.ReactNode }) {
+export default function AppHelp({ children }: { children: React.ReactNode }) {
   return (
-    <RootLayout innerFix withoutUserInfoBanner>
+    <div className="flex flex-col gap-2 py-8 w-full h-full">
       <Typography variant="h4" gutterBottom>
         Help & Support
       </Typography>
@@ -74,6 +73,6 @@ export default function HelpPage({ children }: { children: React.ReactNode }) {
           yu_dong_han@hotmail.com
         </a>
       </Typography>
-    </RootLayout>
+    </div>
   );
 }

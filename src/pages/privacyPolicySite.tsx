@@ -1,14 +1,8 @@
-import type { Metadata } from "next";
 import { RootLayout } from "../components/layout";
-
-export const metadata: Metadata = {
-  title: "How Many Times App Privacy Policy",
-  description: "How Many Times App Privacy Policy",
-};
 
 export default function PPSite({ children }: { children: React.ReactNode }) {
   return (
-    <RootLayout innerFix>
+    <RootLayout innerFix withoutUserInfoBanner>
       <div className="my-8">
         <h1 className="font-bold text-xl mb-6">Privacy Policy</h1>
         <p>

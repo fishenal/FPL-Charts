@@ -101,26 +101,33 @@ export const Nav = () => {
   };
   const renderFullNav = () => {
     return (
-      <header className="flex flex-row py-4 justify-between max-w-screen-lg mx-auto">
-        <div className="flex gap-2 items-center">
-          <Image src="/icon.png" width="50" height="60" alt="FPL Charts Icon" />
-          <h1 className="text-lg font-bold">FPL Charts</h1>
-        </div>
-        <nav className="flex flex-row items-center gap-2">
-          {navs.map(({ label, path }, idx) => (
-            <div className="mx-2" key={idx}>
-              <Link
-                href={path + (demo ? "?demo=1" : "")}
-                className={`py-1 px-2 mt-2 hover:bg-amber-200 block rounded-md ${
-                  pathname === path ? "bg-amber-200" : ""
-                }`}
-              >
-                {label}
-              </Link>
-            </div>
-          ))}
-        </nav>
-      </header>
+      <div className="border-b">
+        <header className="flex flex-row py-4 justify-between max-w-screen-lg mx-auto">
+          <div className="flex gap-2 items-center">
+            <Image
+              src="/icon.png"
+              width="50"
+              height="60"
+              alt="FPL Charts Icon"
+            />
+            <h1 className="text-lg font-bold">FPL Charts</h1>
+          </div>
+          <nav className="flex flex-row items-center gap-2">
+            {navs.map(({ label, path }, idx) => (
+              <div className="mx-2" key={idx}>
+                <Link
+                  href={path + (demo ? "?demo=1" : "")}
+                  className={`py-1 px-2 mt-2 hover:bg-amber-200 block rounded-md ${
+                    pathname === path ? "bg-amber-200" : ""
+                  }`}
+                >
+                  {label}
+                </Link>
+              </div>
+            ))}
+          </nav>
+        </header>
+      </div>
     );
   };
   if (isMobile) {

@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { IdInput } from "./IdInput";
 
 export const HowTo = () => {
   return (
@@ -48,7 +49,8 @@ export const HowTo = () => {
         </div>
         <div className="w-1/3 bg-[#046035] p-4 text-white">
           <h2 className="font-bold">Step3: </h2>
-          <div>Copy your gameId to here: </div>
+          <div className="mb-2">Copy your gameId to here: </div>
+          <IdInput />
         </div>
       </div>
     </div>

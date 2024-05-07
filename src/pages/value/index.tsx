@@ -6,7 +6,6 @@ import { useAppConfig } from "../../hooks/useAppConfig";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { UserInfoHeader } from "../../components/userInfoHeader";
 import { RootLayout } from "../../components/layout";
 
 export default function Points() {
