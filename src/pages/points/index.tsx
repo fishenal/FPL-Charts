@@ -3,12 +3,12 @@ import { useMemo } from "react";
 import ReactEcharts from "echarts-for-react";
 import { HistoryRes, PointsItem } from "@/lib/fetch";
 import useSWR from "swr";
-import { useAppConfig } from "../hooks/useAppConfig";
+import { useAppConfig } from "../../hooks/useAppConfig";
 import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { Events } from "@/pages/api/fpl/events";
-import { UserInfoHeader } from "../components/userInfoHeader";
-import { RootLayout } from "../components/layout";
+import { UserInfoHeader } from "../../components/userInfoHeader";
+import { RootLayout } from "../../components/layout";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 export default function Points() {
   const { id } = useAppConfig();

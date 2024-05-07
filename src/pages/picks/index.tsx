@@ -3,13 +3,13 @@ import { useMemo } from "react";
 import useSWR from "swr";
 import { SolvedBasicInfo, basicInfofetcher, fetcher } from "@/lib/fetcher";
 import { Elements } from "@/pages/api/fpl/elements";
-import { useAppConfig } from "../hooks/useAppConfig";
+import { useAppConfig } from "../../hooks/useAppConfig";
 import { PickDataItem } from "@/pages/api/fpl/picks/[gid]";
 import { SimpleLiveData } from "@/pages/api/fpl/live/[gw]";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { UserInfoHeader } from "../components/userInfoHeader";
-import { RootLayout } from "../components/layout";
+import { UserInfoHeader } from "../../components/userInfoHeader";
+import { RootLayout } from "../../components/layout";
 
 interface SolvedPicksItem {
   isCap: boolean;

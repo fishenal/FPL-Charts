@@ -5,8 +5,8 @@ import { PointsItem } from "@/lib/fetch";
 import useSWR from "swr";
 import { multiFetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { ComparisonHeader, idsItem } from "../components/comparisonHeader";
-import { RootLayout } from "../components/layout";
+import { ComparisonHeader, idsItem } from "../../components/comparisonHeader";
+import { RootLayout } from "../../components/layout";
 export default function Points() {
   const [idList, setIdList] = useState<idsItem[]>([]);
   const { data: hisData, isLoading } = useSWR(

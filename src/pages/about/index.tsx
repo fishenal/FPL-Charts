@@ -1,6 +1,6 @@
 "use client";
 import { Typography } from "@mui/material";
-import { RootLayout } from "../components/layout";
+import { RootLayout } from "../../components/layout";
 
 export default function About() {
   return (

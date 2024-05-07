@@ -7,7 +7,6 @@ import Image from "next/image";
 import { Collapse, IconButton, IconButtonProps } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { isMobile } from "react-device-detect";
-import { render } from "react-dom";
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }

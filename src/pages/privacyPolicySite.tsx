@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { RootLayout } from "./components/layout";
+import { RootLayout } from "../components/layout";
 
 export const metadata: Metadata = {
   title: "How Many Times App Privacy Policy",

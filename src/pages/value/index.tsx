@@ -2,12 +2,12 @@
 import { useMemo } from "react";
 import ReactEcharts from "echarts-for-react";
 import { HistoryRes, PointsItem } from "@/lib/fetch";
-import { useAppConfig } from "../hooks/useAppConfig";
+import { useAppConfig } from "../../hooks/useAppConfig";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { UserInfoHeader } from "../components/userInfoHeader";
-import { RootLayout } from "../components/layout";
+import { UserInfoHeader } from "../../components/userInfoHeader";
+import { RootLayout } from "../../components/layout";
 
 export default function Points() {
   const { id } = useAppConfig();

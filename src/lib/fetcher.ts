@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BasicInfoRes } from "./fetch";
-import { idLsKey } from "@/pages/hooks/useAppConfig";
+import { idLsKey } from "@/hooks/useAppConfig";
 import basicInfo from "./demo/basicInfo";
 import elements from "./demo/elements";
 import live from "./demo/live";
