@@ -1,5 +1,4 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { Nav } from "./nav";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Analytics } from "@vercel/analytics/react";
