@@ -1,4 +1,3 @@
-"use client";
 import { Typography } from "@mui/material";
 import { RootLayout } from "../../components/layout";
 

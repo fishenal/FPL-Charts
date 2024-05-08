@@ -4,7 +4,7 @@ import { HistoryRes, PointsItem } from "@/lib/fetch";
 import useSWR from "swr";
 import { useAppConfig } from "../../hooks/useAppConfig";
 import { fetcher } from "@/lib/fetcher";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { Events } from "@/pages/api/fpl/events";
 import historyDemoData from "../../lib/demo/history";
 

@@ -1,11 +1,10 @@
-"use client";
 import { useMemo } from "react";
 import ReactEcharts from "echarts-for-react";
 import { HistoryRes, PointsItem } from "@/lib/fetch";
 import { useAppConfig } from "../../hooks/useAppConfig";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { RootLayout } from "../../components/layout";
 
 export default function Points() {

@@ -1,4 +1,3 @@
-"use client";
 import { useMemo, useState } from "react";
 import ReactEcharts from "echarts-for-react";
 import { PointsItem } from "@/lib/fetch";

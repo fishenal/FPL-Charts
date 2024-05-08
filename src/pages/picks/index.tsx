@@ -1,4 +1,3 @@
-"use client";
 import { useMemo } from "react";
 import useSWR from "swr";
 import { SolvedBasicInfo, basicInfofetcher, fetcher } from "@/lib/fetcher";
@@ -7,7 +6,7 @@ import { useAppConfig } from "../../hooks/useAppConfig";
 import { PickDataItem } from "@/pages/api/fpl/picks/[gid]";
 import { SimpleLiveData } from "@/pages/api/fpl/live/[gw]";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { RootLayout } from "../../components/layout";
 
 interface SolvedPicksItem {
