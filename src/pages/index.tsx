@@ -3,6 +3,7 @@ import { RootLayout } from "../components/layout";
 import PointsCharts from "../components/PointCharts";
 import Image from "next/image";
 import RankCharts from "../components/RankCharts";
+import i18nHelper from "@/i18n";
 export default function Home() {
   return (
     <RootLayout>
@@ -15,13 +16,13 @@ export default function Home() {
             alt="FPL Charts Banner"
           />
           <h1 className="text-white bg-[#046035] absolute text-3xl bottom-12 left-0 font-bold p-4">
-            Display your Premier League Fantasy Data
+            {i18nHelper.t("bannerTitle")}
           </h1>
         </div>
       </div>
       <HowTo />
       <div className="border-t py-5 max-w-screen-lg mx-4 lg:mx-auto">
-        <h1 className="flex text-lg font-bold">Demos</h1>
+        <h1 className="flex text-lg font-bold">{i18nHelper.t("demoTitle")}</h1>
         <div className="my-6">
           <h2 className="flex text-lg font-bold justify-center px-2 my-2 border-b border-[#046035]">
             Points Charts

@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "./footer";
 import { UserInfoBanner } from "./UserInfoBanner";
 import { GlobalSnackbar } from "./Snackbar";
+
 const inter = Inter({ subsets: ["latin"] });
 export const RootLayout = ({
   children,
