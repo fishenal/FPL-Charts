@@ -2,11 +2,11 @@ import { useMemo } from "react";
 import ReactEcharts from "echarts-for-react";
 import { HistoryRes, PointsItem } from "@/lib/fetch";
 import useSWR from "swr";
-import { useAppConfig } from "../../hooks/useAppConfig";
+import { useAppConfig } from "../hooks/useAppConfig";
 import { fetcher } from "@/lib/fetcher";
 import { Box, CircularProgress } from "@mui/material";
 import { Events } from "@/pages/api/fpl/events";
-import historyDemoData from "../../lib/demo/history";
+import historyDemoData from "../lib/demo/history";
 
 export default function PointsCharts({ demo = false }: { demo?: boolean }) {
   const { id } = useAppConfig();

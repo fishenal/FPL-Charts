@@ -1,8 +1,8 @@
 import { HowTo } from "@/components/howTo";
 import { RootLayout } from "../components/layout";
-import PointsCharts from "./points/charts";
+import PointsCharts from "../components/PointCharts";
 import Image from "next/image";
-import RankCharts from "./rank/charts";
+import RankCharts from "../components/RankCharts";
 export default function Home() {
   return (
     <RootLayout>

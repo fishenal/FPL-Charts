@@ -1,5 +1,5 @@
 import { RootLayout } from "../../components/layout";
-import RankCharts from "./charts";
+import RankCharts from "../../components/RankCharts";
 
 export default function Ranks() {
   return (

@@ -1,5 +1,5 @@
 import { RootLayout } from "../../components/layout";
-import PointsCharts from "./charts";
+import PointsCharts from "../../components/PointCharts";
 
 export default function Points({ demo = false }: { demo?: boolean }) {
   return (
