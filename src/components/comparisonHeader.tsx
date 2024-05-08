@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { ChangeEvent, useState } from "react";
-// import { toast } from "react-toastify";
 import { basicInfofetcher } from "@/lib/fetcher";
-import { Button, Chip, CircularProgress, TextField } from "@mui/material";
+import { Chip, CircularProgress, Divider } from "@mui/material";
+import { CustomButton } from "./Button";
+import { EventBus } from "@/utils/eventBus";
 const comparisonIdKey = "fpl-charts-cpIds";
 export interface idsItem {
   name: string;
@@ -52,11 +53,11 @@ export const ComparisonHeader = ({
         };
         fetchList();
       } else {
-        // toast.warning("Already in List");
+        EventBus.$emit("onMessage", "Already in List");
       }
       setStId("");
     } else {
-      // toast.warning("ID need to be numbers");
+      EventBus.$emit("onMessage", "ID need to be numbers.");
     }
   };
   const handleSearch = () => {
@@ -64,9 +65,10 @@ export const ComparisonHeader = ({
   };
 
   return (
-    <div className="flex items-start flex-col gap-4 border-solid border-b border-neutral-100 py-5 w-full">
-      <div>Please Enter GameID than click Add button</div>
+    <div className="flex items-start flex-col gap-4 border-solid border-b border-neutral-100 w-full mb-4">
+      <h2 className="font-bold">Comparison Players</h2>
       <div className="flex flex-col gap-4 sm:flex-row">
+        {idList.length === 0 && "No Players"}
         {idList.map((item) => (
           <Chip
             label={item.name}
@@ -78,22 +80,24 @@ export const ComparisonHeader = ({
         ))}
       </div>
       {idList.length > 0 && (
-        <Button onClick={handleSearch} variant="outlined">
-          Search
-        </Button>
+        <CustomButton onClick={handleSearch}>
+          Generate Comparison Charts
+        </CustomButton>
       )}
+      <Divider className="w-full" />
+      <h2 className="font-bold">Please Enter GameID than Click Add Button</h2>
       <div className="flex gap-2">
-        <TextField
-          label="Please Enter GameID than click Add button"
-          variant="outlined"
+        <input
+          placeholder="Please Enter GameID"
+          className="px-2 focus:outline-amber-200 rounded-md text-sky-900"
           onChange={handleChange}
           value={stId}
         />
-        <Button onClick={handleAdd} variant="outlined">
-          {loading ? <CircularProgress /> : "Add"}
-        </Button>
+        <CustomButton onClick={handleAdd}>
+          {loading ? <CircularProgress size={20} /> : "Add"}
+        </CustomButton>
       </div>
-      {/* <GlobalLoading isLoading={isLoading} /> */}
+      <Divider className="w-full" />
     </div>
   );
 };
