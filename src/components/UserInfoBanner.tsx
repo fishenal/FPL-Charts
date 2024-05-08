@@ -42,7 +42,7 @@ export const UserInfoBanner = () => {
   const renderDataInfo = () => {
     if (userInfoData) {
       return (
-        <div className="flex items-center gap-2">
+        <div className="flex sm:items-center gap-2 flex-col sm:flex-row items-start pb-2 sm:pb-0">
           <div className="cursor-pointer" onMouseOver={handleClick}>
             Current Data from User <AssignmentIndIcon /> {userInfoData.id}
           </div>
@@ -62,7 +62,7 @@ export const UserInfoBanner = () => {
       );
     } else {
       return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-col sm:flex-row">
           No Available Data.
           <CustomButton>
             <Link href="/#help">Need Help?</Link>
@@ -112,12 +112,11 @@ export const UserInfoBanner = () => {
 
   return (
     <div className="border-b">
-      <div className="max-w-screen-lg mx-auto flex w-full">
-        <div className="flex justify-between w-full my-4">
+      <div className="max-w-screen-lg mx-4 lg:mx-auto">
+        <div className="flex justify-between w-full my-4 flex-col sm:flex-row">
           {renderDataInfo()}
           <IdInput />
         </div>
-        {/* {renderBasicInfo()} */}
 
         <GlobalLoading isLoading={isLoading} />
       </div>

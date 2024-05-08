@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <RootLayout>
       <div className="w-full bg-[#046035]">
-        <div className="max-w-screen-lg mx-auto relative">
+        <div className="max-w-screen-lg mx-4 lg:mx-auto  relative">
           <Image
             src="/homeBanner.jpg"
             width="1200"
@@ -20,7 +20,7 @@ export default function Home() {
         </div>
       </div>
       <HowTo />
-      <div className="border-t py-5 max-w-screen-lg mx-auto">
+      <div className="border-t py-5 max-w-screen-lg mx-4 lg:mx-auto">
         <h1 className="flex text-lg font-bold">Demos</h1>
         <div className="my-6">
           <h2 className="flex text-lg font-bold justify-center px-2 my-2 border-b border-[#046035]">

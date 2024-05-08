@@ -1,14 +1,12 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Nav } from "./nav";
-
 import CssBaseline from "@mui/material/CssBaseline";
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "./footer";
 import { UserInfoBanner } from "./UserInfoBanner";
 import { GlobalSnackbar } from "./Snackbar";
 const inter = Inter({ subsets: ["latin"] });
-
 export const RootLayout = ({
   children,
   innerFix = false,
@@ -20,7 +18,7 @@ export const RootLayout = ({
 }) => {
   const renderChildren = () => {
     if (innerFix) {
-      return <div className="max-w-screen-lg mx-auto">{children}</div>;
+      return <div className="max-w-screen-lg mx-4 lg:mx-auto">{children}</div>;
     }
     return children;
   };

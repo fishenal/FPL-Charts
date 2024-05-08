@@ -1,30 +1,15 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { styled } from "@mui/material/styles";
 import { usePathname } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { Collapse, IconButton, IconButtonProps } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { isMobile } from "react-device-detect";
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
-}
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+import { Drawer } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
 export const Nav = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [expandMenu, setExpandMenu] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const demo = searchParams?.get("demo");
   const navs = [
@@ -58,16 +43,20 @@ export const Nav = () => {
     //   path: "/about",
     // },
   ];
+
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
   const renderMobileNav = () => {
     return (
-      <nav>
-        <header
+      <div className="sm:hidden">
+        <div
           className="p-2 pt-4"
           onClick={() => {
-            setExpandMenu(!expandMenu);
+            setOpen(!open);
           }}
         >
-          <h1 className="flex text-lg p-2 gap-2">
+          <div className="flex text-lg p-2 gap-2">
             <Image
               src="/icon.png"
               width="30"
@@ -75,14 +64,13 @@ export const Nav = () => {
               alt="FPL Charts Icon"
             />
             FPL Charts
-            <ExpandMore expand={expandMenu}>
-              <ExpandMoreIcon />
-            </ExpandMore>
-          </h1>
-        </header>
-
-        <Collapse in={expandMenu || !isMobile} timeout="auto" unmountOnExit>
-          <ul className="w-full mt-5 pb-5">
+            <div className="ml-auto">
+              <MenuIcon />
+            </div>
+          </div>
+        </div>
+        <Drawer open={open} onClose={toggleDrawer(false)}>
+          <ul className="w-[50vw] mt-5 pb-5">
             {navs.map(({ label, path }, idx) => (
               <li className="mx-2" key={idx}>
                 <Link
@@ -96,13 +84,13 @@ export const Nav = () => {
               </li>
             ))}
           </ul>
-        </Collapse>
-      </nav>
+        </Drawer>
+      </div>
     );
   };
   const renderFullNav = () => {
     return (
-      <div className="border-b">
+      <div className="border-b hidden sm:block">
         <header className="flex flex-row py-4 justify-between max-w-screen-lg mx-auto">
           <div className="flex gap-2 items-center">
             <Image
@@ -131,8 +119,11 @@ export const Nav = () => {
       </div>
     );
   };
-  if (isMobile) {
-    return renderMobileNav();
-  }
-  return renderFullNav();
+
+  return (
+    <>
+      {renderMobileNav()}
+      {renderFullNav()}
+    </>
+  );
 };

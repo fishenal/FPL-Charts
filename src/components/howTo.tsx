@@ -5,10 +5,10 @@ import { IdInput } from "./IdInput";
 
 export const HowTo = () => {
   return (
-    <div className="border-t py-5 max-w-screen-lg mx-auto" id="help">
+    <div className="border-t py-5 max-w-screen-lg mx-4 lg:mx-auto " id="help">
       <h1 className="flex text-lg font-bold">How to Use</h1>
-      <div className="flex justify-between w-full gap-2">
-        <div className="w-1/3 bg-[#046035] p-4 text-white">
+      <div className="flex justify-between w-full gap-2 flex-col sm:flex-row ">
+        <div className="w-full sm:w-1/3 bg-[#046035] p-4 text-white">
           <h2 className="font-bold">Step1: </h2>
           <div className="text-sm">
             Sign in on{" "}
@@ -22,7 +22,7 @@ export const HowTo = () => {
           </div>
         </div>
 
-        <div className="w-1/3 bg-[#046035] p-4 text-white">
+        <div className="w-full sm:w-1/3 bg-[#046035] p-4 text-white">
           <h2 className="font-bold">Step2: </h2>
           <div className="text-sm">
             Click <i>Points</i> tab, Check URL like{" "}
@@ -47,7 +47,7 @@ export const HowTo = () => {
             </Link>
           </div>
         </div>
-        <div className="w-1/3 bg-[#046035] p-4 text-white">
+        <div className="w-full sm:w-1/3 bg-[#046035] p-4 text-white">
           <h2 className="font-bold">Step3: </h2>
           <div className="mb-2">Copy your gameId to here: </div>
           <IdInput />
