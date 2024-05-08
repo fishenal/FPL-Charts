@@ -1,5 +1,4 @@
 import React from "react";
-import { toast } from "react-toastify";
 import { useAppConfig } from "../hooks/useAppConfig";
 import { SolvedBasicInfo, basicInfofetcher } from "@/lib/fetcher";
 import useSWR from "swr";
@@ -10,6 +9,7 @@ import { CustomButton } from "./Button";
 import { IdInput } from "./IdInput";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import Popover from "@mui/material/Popover";
+import { EventBus } from "@/utils/eventBus";
 
 export const UserInfoBanner = () => {
   const { id, setId } = useAppConfig();
@@ -35,7 +35,7 @@ export const UserInfoBanner = () => {
     if (/^\d+$/.test(id)) {
       setId(id);
     } else {
-      toast.warning("ID need to be numbers");
+      EventBus.$emit("onMessage", "ID need to be numbers.");
     }
   };
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { ChangeEvent, useState } from "react";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { basicInfofetcher } from "@/lib/fetcher";
 import { Button, Chip, CircularProgress, TextField } from "@mui/material";
 const comparisonIdKey = "fpl-charts-cpIds";
@@ -52,11 +52,11 @@ export const ComparisonHeader = ({
         };
         fetchList();
       } else {
-        toast.warning("Already in List");
+        // toast.warning("Already in List");
       }
       setStId("");
     } else {
-      toast.warning("ID need to be numbers");
+      // toast.warning("ID need to be numbers");
     }
   };
   const handleSearch = () => {

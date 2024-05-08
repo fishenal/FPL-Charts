@@ -1,13 +1,12 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Nav } from "./nav";
-// import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "./footer";
 import { UserInfoBanner } from "./UserInfoBanner";
+import { GlobalSnackbar } from "./Snackbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const RootLayout = ({
@@ -34,18 +33,7 @@ export const RootLayout = ({
         <main>{renderChildren()}</main>
         <Footer />
         <Analytics />
-        {/* <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        /> */}
+        <GlobalSnackbar />
       </div>
     </div>
     // <html lang="en">

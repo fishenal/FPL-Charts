@@ -2,23 +2,12 @@ import React from "react";
 import { ChangeEvent, useState } from "react";
 import { useAppConfig } from "../hooks/useAppConfig";
 import { CustomButton } from "./Button";
-import Snackbar from "@mui/material/Snackbar";
+import { EventBus } from "@/utils/eventBus";
 
 export const IdInput = () => {
   const { setId } = useAppConfig();
   const [stId, setStId] = useState("");
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
-  const handleClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpenSnackbar(false);
-  };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStId(e.target.value);
   };
@@ -27,7 +16,7 @@ export const IdInput = () => {
     if (/^\d+$/.test(stId)) {
       setId(stId);
     } else {
-      setOpenSnackbar(true);
+      EventBus.$emit("onMessage", "ID need to be numbers.");
     }
   };
 
@@ -38,17 +27,10 @@ export const IdInput = () => {
           placeholder="Enter FPL gameId"
           onChange={handleChange}
           value={stId}
-          className="px-2 focus:outline-amber-200 rounded-md "
+          className="px-2 focus:outline-amber-200 rounded-md text-sky-900"
         />
         <CustomButton onClick={handleSearch}>Search</CustomButton>
       </div>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message="ID need to be numbers"
-      />
     </>
   );
 };

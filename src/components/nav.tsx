@@ -40,10 +40,7 @@ export const Nav = () => {
       label: "Rank",
       path: "/rank",
     },
-    {
-      label: "Comparison",
-      path: "/comparison",
-    },
+
     {
       label: "Value",
       path: "/value",
@@ -51,6 +48,10 @@ export const Nav = () => {
     {
       label: "Table",
       path: "/picks",
+    },
+    {
+      label: "Comparison",
+      path: "/comparison",
     },
     // {
     //   label: "About",
