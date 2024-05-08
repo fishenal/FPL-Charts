@@ -58,14 +58,14 @@ export default function About() {
             yu_dong_han@hotmail.com
           </a>
         </Typography>
-        <div>
+        {/* <div>
           <a href="https://www.buymeacoffee.com/fishenal" target="_blank">
             <img
               src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png"
               alt="Buy Me A Coffee"
             />
           </a>
-        </div>
+        </div> */}
       </div>
     </RootLayout>
   );
