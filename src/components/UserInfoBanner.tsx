@@ -13,7 +13,7 @@ import { EventBus } from "@/utils/eventBus";
 import i18nHelper from "@/i18n";
 
 export const UserInfoBanner = () => {
-  const { id, setId } = useAppConfig();
+  const { id, setId, removeLocal } = useAppConfig();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -40,6 +40,15 @@ export const UserInfoBanner = () => {
     }
   };
 
+  const clearData = () => {
+    try {
+      removeLocal(id);
+      window.location.reload();
+    } catch {
+      console.log("uncertian server clearData");
+    }
+  };
+
   const renderDataInfo = () => {
     if (userInfoData) {
       return (
@@ -61,6 +70,9 @@ export const UserInfoBanner = () => {
           </Popover>
           <CustomButton onClick={updateId}>
             {i18nHelper.t("updateData")}
+          </CustomButton>
+          <CustomButton onClick={clearData}>
+            {i18nHelper.t("clearData")}
           </CustomButton>
         </div>
       );

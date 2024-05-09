@@ -1,3 +1,4 @@
+import { comparisonIdKey } from "@/components/comparisonHeader";
 import { userIdfetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 const lsKey = "fpl-charts-elements";
@@ -5,6 +6,7 @@ const lsKey = "fpl-charts-elements";
 interface appConfig {
   id: string;
   setId: (st: string) => void;
+  removeLocal: (id: string) => void;
 }
 export const idLsKey = "fpl-charts-id";
 export const useAppConfig = (): appConfig => {
@@ -15,6 +17,7 @@ export const useAppConfig = (): appConfig => {
     window.localStorage.removeItem(`/api/fpl/picks/${id}`);
     window.localStorage.removeItem(idLsKey);
     window.localStorage.removeItem("/api/fpl/events");
+    window.localStorage.removeItem(comparisonIdKey)
   };
   const setId = (id: string) => {
     removeLocal(id);
@@ -30,5 +33,6 @@ export const useAppConfig = (): appConfig => {
   return {
     id: data || "",
     setId,
+    removeLocal
   };
 };

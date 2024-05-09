@@ -24,6 +24,7 @@ const content = {
     },
     currentUser: "Current Data from User ",
     updateData: "Update My Data",
+    clearData: "Clear Locale Data",
     noData: "No Available Data.",
     needHelp: "Need Help?",
     user: {

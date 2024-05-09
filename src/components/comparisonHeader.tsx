@@ -5,7 +5,7 @@ import { Chip, CircularProgress, Divider } from "@mui/material";
 import { CustomButton } from "./Button";
 import { EventBus } from "@/utils/eventBus";
 import i18nHelper from "@/i18n";
-const comparisonIdKey = "fpl-charts-cpIds";
+export const comparisonIdKey = "fpl-charts-cpIds";
 export interface idsItem {
   name: string;
   id: string;

@@ -25,6 +25,7 @@ const content = {
     },
     currentUser: "当前数据来自用户： ",
     updateData: "更新数据",
+    clearData: "清空本地数据",
     noData: "无可用数据",
     needHelp: "需要帮助?",
     user: {
