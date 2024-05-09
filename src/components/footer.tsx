@@ -20,7 +20,7 @@ export const Footer = () => {
     },
     {
       label: i18nHelper.t("help"),
-      path: "/#help",
+      path: "/appHelp",
     },
     {
       label: i18nHelper.t("prpl"),

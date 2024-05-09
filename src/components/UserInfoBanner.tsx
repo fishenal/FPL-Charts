@@ -69,7 +69,7 @@ export const UserInfoBanner = () => {
         <div className="flex items-center gap-2 flex-col sm:flex-row">
           {i18nHelper.t("noData")}
           <CustomButton>
-            <Link href="/#help">{i18nHelper.t("needHelp")}</Link>
+            <Link href="/appHelp">{i18nHelper.t("needHelp")}</Link>
           </CustomButton>
         </div>
       );
