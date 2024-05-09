@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import LocaleSwitcher from "./LocaleSwitcher";
 
 export const Footer = () => {
   const navs = [
@@ -30,8 +31,8 @@ export const Footer = () => {
           <Image src="/icon.png" width="50" height="60" alt="FPL Charts Icon" />
         </h1>
 
-        <div className="flex flex-col items-end">
-          <ul className="flex pl-8 gap-4 flex-col sm:flex-row">
+        <div className="flex flex-col sm:flex-row items-end gap-4">
+          <ul className="flex pl-8 gap-4 flex-col sm:flex-row items-end">
             {navs.map(({ label, path, target }, idx) => (
               <li className="hover:underline hover:text-amber-800" key={idx}>
                 <Link href={path} target={target ? "_blank" : "_self"}>
@@ -41,6 +42,7 @@ export const Footer = () => {
             ))}
             <li>fishenal@2024</li>
           </ul>
+          <LocaleSwitcher />
         </div>
       </div>
     </footer>

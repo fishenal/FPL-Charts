@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import LocaleSwitcher from "./LocaleSwitcher";
 
 export const Nav = () => {
   const pathname = usePathname();
@@ -65,7 +64,6 @@ export const Nav = () => {
               alt="FPL Charts Icon"
             />
             FPL Charts
-            <LocaleSwitcher />
             <div className="ml-auto">
               <MenuIcon />
             </div>
@@ -102,7 +100,6 @@ export const Nav = () => {
               alt="FPL Charts Icon"
             />
             <h1 className="text-lg font-bold">FPL Charts</h1>
-            <LocaleSwitcher />
           </div>
           <nav className="flex flex-row items-center gap-2">
             {navs.map(({ label, path }, idx) => (
