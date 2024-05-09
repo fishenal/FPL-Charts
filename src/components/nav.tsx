@@ -31,7 +31,7 @@ export const Nav = () => {
       path: "/value",
     },
     {
-      label: "Table",
+      label: "Picks",
       path: "/picks",
     },
     {

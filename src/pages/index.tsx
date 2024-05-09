@@ -4,18 +4,12 @@ import PointsCharts from "../components/PointCharts";
 import Image from "next/image";
 import RankCharts from "../components/RankCharts";
 import i18nHelper from "@/i18n";
-import { Metadata } from "next";
-import { normalMetadata } from "@/utils/normalMetadata";
-
-export const metadata: Metadata = {
-  title: "FPL-Charts",
-  description: "Analytics tool of Fantasy Premier League",
-  ...normalMetadata,
-};
+import { CommonHead } from "@/components/Head";
 
 export default function Home() {
   return (
     <RootLayout>
+      <CommonHead pageName="Home" />
       <div className="w-full bg-[#046035]">
         <div className="max-w-screen-lg mx-4 lg:mx-auto  relative">
           <Image

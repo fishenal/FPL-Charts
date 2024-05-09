@@ -6,6 +6,7 @@ import { multiFetcher } from "@/lib/fetcher";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { ComparisonHeader, idsItem } from "../../components/comparisonHeader";
 import { RootLayout } from "../../components/layout";
+import { CommonHead } from "@/components/Head";
 export default function Points() {
   const [idList, setIdList] = useState<idsItem[]>([]);
   const { data: hisData, isLoading } = useSWR(
@@ -155,11 +156,12 @@ export default function Points() {
 
   return (
     <RootLayout innerFix withoutUserInfoBanner>
+      <CommonHead
+        pageName="Comparison"
+        desc="Comparison Page can help to compare FPL players points & rank by GWs."
+      />
       <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
         <ComparisonHeader onSearch={handleSearch} />
-        {/* <h2>
-          Comparison Page can help to compare FPL players points & rank by GWs.
-        </h2> */}
         <div className="w-full h-full">
           {isLoading ? (
             <Box

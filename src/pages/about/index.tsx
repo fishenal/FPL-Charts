@@ -1,9 +1,11 @@
 import { Typography } from "@mui/material";
 import { RootLayout } from "../../components/layout";
+import { CommonHead } from "@/components/Head";
 
 export default function About() {
   return (
     <RootLayout innerFix withoutUserInfoBanner>
+      <CommonHead pageName="About" desc="About FPL charts & fishenal" />
       <div className="flex flex-col gap-2 py-8 w-full h-full">
         <Typography variant="h4" gutterBottom>
           About
