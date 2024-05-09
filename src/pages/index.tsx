@@ -28,11 +28,11 @@ export default function Home() {
         <h1 className="flex text-lg font-bold">{i18nHelper.t("demoTitle")}</h1>
         <div className="my-6">
           <h2 className="flex text-lg font-bold justify-center px-2 my-2 border-b border-[#046035]">
-            Points Charts
+            {i18nHelper.t("point")} {i18nHelper.t("chart")}
           </h2>
           <PointsCharts demo />
           <h2 className="flex text-lg font-bold justify-center px-2 my-2 border-b border-[#046035]">
-            Rank Charts
+            {i18nHelper.t("rank")} {i18nHelper.t("chart")}
           </h2>
           <div className="mt-6">
             <RankCharts demo />

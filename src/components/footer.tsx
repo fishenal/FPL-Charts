@@ -2,24 +2,28 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import LocaleSwitcher from "./LocaleSwitcher";
+import i18nHelper from "@/i18n";
+import { useRouter } from "next/router";
 
 export const Footer = () => {
+  const router = useRouter();
+  const { locale: activeLocale } = router;
   const navs = [
     {
-      label: "Premier League Fantasy",
+      label: i18nHelper.t("fplSite"),
       path: "https://fantasy.premierleague.com/",
       target: true,
     },
     {
-      label: "About",
+      label: i18nHelper.t("about"),
       path: "/about",
     },
     {
-      label: "Help",
+      label: i18nHelper.t("help"),
       path: "/#help",
     },
     {
-      label: "Privacy Policy",
+      label: i18nHelper.t("prpl"),
       path: "/privacyPolicySite",
     },
   ];

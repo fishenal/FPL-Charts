@@ -1,35 +1,20 @@
 import { Typography } from "@mui/material";
-import { RootLayout } from "../../components/layout";
+import { RootLayout } from "../../../components/layout";
 import { CommonHead } from "@/components/Head";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 export default function About() {
-  const router = useRouter();
-  const { locale: activeLocale } = router;
-
-  useEffect(() => {
-    if (activeLocale === "zh") {
-      router.push("/about/zh");
-    } else {
-      router.push("/about");
-    }
-  }, [activeLocale, router]);
-
   return (
     <RootLayout innerFix withoutUserInfoBanner>
       <CommonHead pageName="About" desc="About FPL charts & fishenal" />
       <div className="flex flex-col gap-2 py-8 w-full h-full">
         <Typography variant="h4" gutterBottom>
-          About
+          关于
         </Typography>
         <Typography gutterBottom>
-          This Site is created by fishenal, a Web Developer in Shanghai.
+          网站由fishenal独立设计开发, 我是一名前端开发工程师
         </Typography>
-
         <Typography gutterBottom>
-          This project is open-sourced, If you are interesting about this
-          project please see my github:
+          可在github查看此开源项目:
           <a
             href="https://github.com/fishenal/FPL-Charts"
             target="_blank"
@@ -40,13 +25,14 @@ export default function About() {
           >
             https://github.com/fishenal/FPL-Charts
           </a>
+          , 欢迎提交issue/PR.
         </Typography>
         <Typography gutterBottom>
-          I used React + Next.js + SWR + ECharts + Tailwindcss + MaterialUI for
-          this project. Thanks for these wonderful libarary.
+          技术栈包括： React + Next.js + SWR + ECharts + Tailwindcss +
+          MaterialUI, 在此鸣谢
         </Typography>
         <Typography gutterBottom>
-          Contact me by email:{" "}
+          可通过这个联系我：
           <a
             href="mailTo:yu_dong_han@hotmail.com"
             style={{

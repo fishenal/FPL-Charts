@@ -4,6 +4,7 @@ import { basicInfofetcher } from "@/lib/fetcher";
 import { Chip, CircularProgress, Divider } from "@mui/material";
 import { CustomButton } from "./Button";
 import { EventBus } from "@/utils/eventBus";
+import i18nHelper from "@/i18n";
 const comparisonIdKey = "fpl-charts-cpIds";
 export interface idsItem {
   name: string;
@@ -53,11 +54,11 @@ export const ComparisonHeader = ({
         };
         fetchList();
       } else {
-        EventBus.$emit("onMessage", "Already in List");
+        EventBus.$emit("onMessage", i18nHelper.t("message.inList"));
       }
       setStId("");
     } else {
-      EventBus.$emit("onMessage", "ID need to be numbers.");
+      EventBus.$emit("onMessage", i18nHelper.t("message.idNumber"));
     }
   };
   const handleSearch = () => {
@@ -66,7 +67,7 @@ export const ComparisonHeader = ({
 
   return (
     <div className="flex items-start flex-col gap-4 border-solid border-b border-neutral-100 w-full mb-4">
-      <h2 className="font-bold">Comparison Players</h2>
+      <h2 className="font-bold">{i18nHelper.t("cprPlayers")}</h2>
       <div className="flex flex-col gap-4 sm:flex-row">
         {idList.length === 0 && "No Players"}
         {idList.map((item) => (
@@ -81,20 +82,20 @@ export const ComparisonHeader = ({
       </div>
       {idList.length > 0 && (
         <CustomButton onClick={handleSearch}>
-          Generate Comparison Charts
+          {i18nHelper.t("genCprButton")}
         </CustomButton>
       )}
       <Divider className="w-full" />
-      <h2 className="font-bold">Please Enter GameID than Click Add Button</h2>
+      <h2 className="font-bold">{i18nHelper.t("cprInfo")}</h2>
       <div className="flex gap-2">
         <input
-          placeholder="Please Enter GameID"
+          placeholder={i18nHelper.t("enterId")}
           className="px-2 focus:outline-amber-200 rounded-md text-sky-900"
           onChange={handleChange}
           value={stId}
         />
         <CustomButton onClick={handleAdd}>
-          {loading ? <CircularProgress size={20} /> : "Add"}
+          {loading ? <CircularProgress size={20} /> : i18nHelper.t("add")}
         </CustomButton>
       </div>
       <Divider className="w-full" />

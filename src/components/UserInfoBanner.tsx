@@ -10,6 +10,7 @@ import { IdInput } from "./IdInput";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import Popover from "@mui/material/Popover";
 import { EventBus } from "@/utils/eventBus";
+import i18nHelper from "@/i18n";
 
 export const UserInfoBanner = () => {
   const { id, setId } = useAppConfig();
@@ -35,7 +36,7 @@ export const UserInfoBanner = () => {
     if (/^\d+$/.test(id)) {
       setId(id);
     } else {
-      EventBus.$emit("onMessage", "ID need to be numbers.");
+      EventBus.$emit("onMessage", i18nHelper.t("message.idNumber"));
     }
   };
 
@@ -44,7 +45,8 @@ export const UserInfoBanner = () => {
       return (
         <div className="flex sm:items-center gap-2 flex-col sm:flex-row items-start pb-2 sm:pb-0">
           <div className="cursor-pointer" onMouseOver={handleClick}>
-            Current Data from User <AssignmentIndIcon /> {userInfoData.id}
+            {i18nHelper.t("currentUser")} <AssignmentIndIcon />{" "}
+            {userInfoData.id}
           </div>
           <Popover
             open={open}
@@ -57,15 +59,17 @@ export const UserInfoBanner = () => {
           >
             <div className="p-4 rounded-md">{renderBasicInfo()}</div>
           </Popover>
-          <CustomButton onClick={updateId}>Update My Data</CustomButton>
+          <CustomButton onClick={updateId}>
+            {i18nHelper.t("updateData")}
+          </CustomButton>
         </div>
       );
     } else {
       return (
         <div className="flex items-center gap-2 flex-col sm:flex-row">
-          No Available Data.
+          {i18nHelper.t("noData")}
           <CustomButton>
-            <Link href="/#help">Need Help?</Link>
+            <Link href="/#help">{i18nHelper.t("needHelp")}</Link>
           </CustomButton>
         </div>
       );
@@ -77,31 +81,31 @@ export const UserInfoBanner = () => {
       return (
         <div>
           <p>
-            <span className="font-bold">Team Name: </span>
+            <span className="font-bold">{i18nHelper.t("user.team")}</span>
             {userInfoData.name}
           </p>
           <p>
-            <span className="font-bold">Player Name: </span>
+            <span className="font-bold">{i18nHelper.t("user.player")}</span>
             {userInfoData.player_first_name} {userInfoData.player_last_name}
           </p>
           <p>
-            <span className="font-bold">Region:</span>{" "}
+            <span className="font-bold">{i18nHelper.t("user.region")}</span>
             {userInfoData.player_region_name}
           </p>
           <p>
-            <span className="font-bold">Overall Points:</span>{" "}
+            <span className="font-bold">{i18nHelper.t("user.points")}</span>{" "}
             {userInfoData.summary_overall_points}
           </p>
           <p>
-            <span className="font-bold">Overall Rank: </span>
+            <span className="font-bold">{i18nHelper.t("user.rank")}</span>
             {userInfoData.summary_overall_rank}
           </p>
           <p>
-            <span className="font-bold">UpdateTime: </span>
-            {dayjs(userInfoData.updateAt).format()}
+            <span className="font-bold">{i18nHelper.t("user.updateTime")}</span>
+            {dayjs(userInfoData.updateAt).format("DD/MM/YYYY")}
           </p>
           <p>
-            <span className="font-bold">Until GW: </span>
+            <span className="font-bold">{i18nHelper.t("user.gw")}</span>
             {userInfoData.current_event}
           </p>
         </div>

@@ -7,5 +7,4 @@ const i18nHelper = rosetta({
     zh
 });
 
-i18nHelper.locale('en');
 export default i18nHelper;

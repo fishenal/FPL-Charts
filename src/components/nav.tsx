@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import i18nHelper from "@/i18n";
 
 export const Nav = () => {
   const pathname = usePathname();
@@ -14,28 +15,28 @@ export const Nav = () => {
   const demo = searchParams?.get("demo");
   const navs = [
     {
-      label: "Home",
+      label: i18nHelper.t("home"),
       path: "/",
     },
     {
-      label: "Points",
+      label: i18nHelper.t("point"),
       path: "/points",
     },
     {
-      label: "Rank",
+      label: i18nHelper.t("rank"),
       path: "/rank",
     },
 
     {
-      label: "Value",
+      label: i18nHelper.t("value"),
       path: "/value",
     },
     {
-      label: "Picks",
+      label: i18nHelper.t("pick"),
       path: "/picks",
     },
     {
-      label: "Comparison",
+      label: i18nHelper.t("comparison"),
       path: "/comparison",
     },
     // {
@@ -92,15 +93,17 @@ export const Nav = () => {
     return (
       <div className="border-b hidden sm:block">
         <header className="flex flex-row py-4 justify-between max-w-screen-lg mx-auto">
-          <div className="flex gap-2 items-center">
-            <Image
-              src="/icon.png"
-              width="50"
-              height="60"
-              alt="FPL Charts Icon"
-            />
-            <h1 className="text-lg font-bold">FPL Charts</h1>
-          </div>
+          <Link href="/">
+            <div className="flex gap-2 items-center">
+              <Image
+                src="/icon.png"
+                width="50"
+                height="60"
+                alt="FPL Charts Icon"
+              />
+              <h1 className="text-lg font-bold">FPL Charts</h1>
+            </div>
+          </Link>
           <nav className="flex flex-row items-center gap-2">
             {navs.map(({ label, path }, idx) => (
               <div className="mx-2" key={idx}>

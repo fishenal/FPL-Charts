@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from "react";
 import { useAppConfig } from "../hooks/useAppConfig";
 import { CustomButton } from "./Button";
 import { EventBus } from "@/utils/eventBus";
+import i18nHelper from "@/i18n";
 
 export const IdInput = () => {
   const { setId } = useAppConfig();
@@ -16,7 +17,7 @@ export const IdInput = () => {
     if (/^\d+$/.test(stId)) {
       setId(stId);
     } else {
-      EventBus.$emit("onMessage", "ID need to be numbers.");
+      EventBus.$emit("onMessage", i18nHelper.t("message.idNumber"));
     }
   };
 
@@ -24,12 +25,14 @@ export const IdInput = () => {
     <>
       <div className="flex gap-2">
         <input
-          placeholder="Enter FPL gameId"
+          placeholder={i18nHelper.t("enterId")}
           onChange={handleChange}
           value={stId}
           className="px-2 focus:outline-amber-200 rounded-md text-sky-900"
         />
-        <CustomButton onClick={handleSearch}>Search</CustomButton>
+        <CustomButton onClick={handleSearch}>
+          {i18nHelper.t("search")}
+        </CustomButton>
       </div>
     </>
   );
