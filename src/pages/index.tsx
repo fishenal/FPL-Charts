@@ -4,6 +4,15 @@ import PointsCharts from "../components/PointCharts";
 import Image from "next/image";
 import RankCharts from "../components/RankCharts";
 import i18nHelper from "@/i18n";
+import { Metadata } from "next";
+import { normalMetadata } from "@/utils/normalMetadata";
+
+export const metadata: Metadata = {
+  title: "FPL-Charts",
+  description: "Analytics tool of Fantasy Premier League",
+  ...normalMetadata,
+};
+
 export default function Home() {
   return (
     <RootLayout>
