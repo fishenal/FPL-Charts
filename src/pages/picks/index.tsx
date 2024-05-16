@@ -180,6 +180,7 @@ export default function PlayerChoose() {
       <CommonHead
         pageName="Pick Table"
         desc="Analytics of Your FPL Picks Stats Table"
+        noIndex
       />
       <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
         <h2>Analytics of Your FPL Picks Stats Table</h2>

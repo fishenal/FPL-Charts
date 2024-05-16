@@ -159,6 +159,7 @@ export default function Points() {
       <CommonHead
         pageName="Comparison"
         desc="Comparison Page can help to compare FPL players points & rank by GWs."
+        noIndex
       />
       <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
         <ComparisonHeader onSearch={handleSearch} />

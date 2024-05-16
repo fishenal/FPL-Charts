@@ -114,7 +114,7 @@ export default function Points() {
   };
   return (
     <RootLayout innerFix>
-      <CommonHead pageName="Values" desc="Your FPL Team Value Chart" />
+      <CommonHead pageName="Values" desc="Your FPL Team Value Chart" noIndex />
       <h2 className="mb-4 text-center mt-6">Your FPL Team Value Chart</h2>
       <div className="flex justify-center flex-col items-center gap-2 py-8 w-full h-full">
         <div className="w-full h-full">

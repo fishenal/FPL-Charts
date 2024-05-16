@@ -4,10 +4,12 @@ export const CommonHead = ({
   title = "FPL-Charts",
   desc = "Analytics tool of Fantasy Premier League(FPL), History of FPL",
   pageName = "",
+  noIndex = false,
 }: {
   title?: string;
   desc?: string;
   pageName?: string;
+  noIndex?: boolean;
 }) => {
   const siteUrl = "https://fpl-charts.com";
   return (
@@ -24,7 +26,10 @@ export const CommonHead = ({
         content="fpl charts, fpl analytics, fpl pridict, fpl tools, charts, fpl,fpl game history, premierleague,fantasy game,football fantasy game,analytics tool,fantasy game analytics tool"
       />
       <meta name="referrer" content="origin" />
-      <meta name="robots" content="index, follow" />
+      <meta
+        name="robots"
+        content={`${noIndex ? "noindex" : "index"}, follow`}
+      />
       <link rel="icon" href={`${siteUrl}/icon.png`} />
       <link rel="manifest" href={`${siteUrl}/site.webmanifest`} />
       <link rel="apple-touch-icon" href={`${siteUrl}/icon.png`} />
